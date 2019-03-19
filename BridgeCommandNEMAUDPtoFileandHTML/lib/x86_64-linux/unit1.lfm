@@ -1,0 +1,68 @@
+object Form1: TForm1
+  Left = 461
+  Height = 257
+  Top = 120
+  Width = 639
+  Caption = 'Form1'
+  ClientHeight = 257
+  ClientWidth = 639
+  OnCreate = FormCreate
+  LCLVersion = '2.0.0.4'
+  object Memo1: TMemo
+    Left = 32
+    Height = 144
+    Top = 88
+    Width = 568
+    Lines.Strings = (
+      'Memo1'
+    )
+    OnChange = Memo1Change
+    TabOrder = 0
+  end
+  object Stop: TButton
+    Left = 176
+    Height = 25
+    Top = 16
+    Width = 75
+    Caption = 'Stop'
+    OnClick = StopClick
+    TabOrder = 1
+  end
+  object UpDown1: TUpDown
+    Left = 384
+    Height = 29
+    Top = 16
+    Width = 17
+    Associate = Edit1
+    Min = 0
+    Position = 10
+    TabOrder = 2
+  end
+  object Edit1: TEdit
+    Left = 304
+    Height = 29
+    Top = 16
+    Width = 80
+    OnChange = Edit1Change
+    TabOrder = 3
+    Text = 'Edit1'
+  end
+  object IdUDPClient1: TIdUDPClient
+    OnStatus = IdUDPClient1Status
+    Active = True
+    BoundIP = '127.0.0.1'
+    BoundPort = 10110
+    Host = '127.0.0.1'
+    Port = 10110
+    OnConnected = IdUDPClient1Connected
+    OnDisconnected = IdUDPClient1Disconnected
+    left = 32
+    top = 16
+  end
+  object Timer1: TTimer
+    Interval = 10
+    OnTimer = Timer1Timer
+    left = 99
+    top = 16
+  end
+end
