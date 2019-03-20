@@ -18,31 +18,27 @@ type
     Edit2: TEdit;
     Edit3: TEdit;
     Edit4: TEdit;
-    Edit5: TEdit;
     IdHTTPServer1: TIdHTTPServer;
+    IdUDPClient2: TIdUDPClient;
     Label1: TLabel;
     Label2: TLabel;
     Label3: TLabel;
     Label4: TLabel;
-    Label5: TLabel;
     Stop: TButton;
     IdUDPClient1: TIdUDPClient;
     Memo1: TMemo;
     Timer1: TTimer;
-    Timer2: TTimer;
     UpDown1: TUpDown;
     UpDown2: TUpDown;
     UpDown3: TUpDown;
     procedure Button1Click(Sender: TObject);
     procedure Edit1Change(Sender: TObject);
     procedure Edit4Change(Sender: TObject);
-    procedure Edit5Change(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure IdHTTPServer1CommandGet(AContext: TIdContext;
       ARequestInfo: TIdHTTPRequestInfo; AResponseInfo: TIdHTTPResponseInfo);
     procedure StopClick(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
-    procedure Timer2Timer(Sender: TObject);
   private
 
   public
@@ -61,6 +57,9 @@ implementation
 
 { TForm1 }
 
+//bc sends 6 NEMA datagrams every 250 ms
+//we
+
 procedure TForm1.Edit1Change(Sender: TObject);
 begin
   Timer1.Interval :=  StrToInt( Edit1.Text);
@@ -75,14 +74,6 @@ IdUDPClient1.BoundPort :=  UpDown3.Position;
 IdUDPClient1.active := True;
 end;
 
-procedure TForm1.Edit5Change(Sender: TObject);
-begin
-IdUDPClient1.active := False;
-//IdUDPClient1.Disconnect;
-IdUDPClient1.BoundIP := Edit5.text;
-//IdUDPClient1.Connect;
-IdUDPClient1.active := True;
-end;
 
 procedure TForm1.Button1Click(Sender: TObject);
 begin
@@ -138,11 +129,6 @@ If ( lineCount > UpDown2.Position ) then
      end;
      ;
      //IdUDPClient1.Disconnect;
-end;
-
-procedure TForm1.Timer2Timer(Sender: TObject);
-begin
-  //IdHTTPServer1.Active := True;
 end;
 
 

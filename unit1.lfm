@@ -1,7 +1,7 @@
 object Form1: TForm1
-  Left = 237
+  Left = 266
   Height = 311
-  Top = 148
+  Top = 106
   Width = 432
   Caption = 'BC UDP to File and HTML'
   ClientHeight = 311
@@ -30,17 +30,17 @@ object Form1: TForm1
   end
   object UpDown1: TUpDown
     Left = 56
-    Height = 29
+    Height = 21
     Top = 8
     Width = 17
     Associate = Edit1
     Min = 0
-    Position = 250
+    Position = 100
     TabOrder = 2
   end
   object Edit1: TEdit
     Left = 8
-    Height = 29
+    Height = 21
     Top = 8
     Width = 48
     OnChange = Edit1Change
@@ -49,15 +49,15 @@ object Form1: TForm1
   end
   object Label1: TLabel
     Left = 80
-    Height = 17
+    Height = 13
     Top = 8
-    Width = 110
-    Caption = 'UDP read Rate (ms)'
+    Width = 120
+    Caption = 'datagram post Rate (ms)'
     ParentColor = False
   end
   object Edit2: TEdit
     Left = 8
-    Height = 29
+    Height = 21
     Top = 36
     Width = 48
     TabOrder = 4
@@ -65,20 +65,20 @@ object Form1: TForm1
   end
   object UpDown2: TUpDown
     Left = 56
-    Height = 29
+    Height = 21
     Top = 36
     Width = 17
     Associate = Edit2
     Min = 0
-    Position = 5
+    Position = 6
     TabOrder = 5
   end
   object Label2: TLabel
     Left = 80
-    Height = 17
+    Height = 13
     Top = 36
-    Width = 102
-    Caption = '# of lines buffered'
+    Width = 140
+    Caption = '# of html /text lines buffered'
     ParentColor = False
   end
   object Button1: TButton
@@ -92,7 +92,7 @@ object Form1: TForm1
   end
   object Edit3: TEdit
     Left = 8
-    Height = 29
+    Height = 21
     Top = 64
     Width = 176
     TabOrder = 7
@@ -100,8 +100,8 @@ object Form1: TForm1
   end
   object Edit4: TEdit
     Left = 8
-    Height = 29
-    Top = 120
+    Height = 21
+    Top = 96
     Width = 80
     NumbersOnly = True
     OnChange = Edit4Change
@@ -110,24 +110,24 @@ object Form1: TForm1
   end
   object Label3: TLabel
     Left = 192
-    Height = 17
+    Height = 13
     Top = 64
-    Width = 68
+    Width = 57
     Caption = 'OP filename'
     ParentColor = False
   end
   object Label4: TLabel
     Left = 113
-    Height = 17
-    Top = 120
-    Width = 66
-    Caption = 'BC udp port'
+    Height = 13
+    Top = 96
+    Width = 77
+    Caption = ' bound udp port'
     ParentColor = False
   end
   object UpDown3: TUpDown
     Left = 88
-    Height = 29
-    Top = 120
+    Height = 21
+    Top = 96
     Width = 17
     Associate = Edit4
     Max = 20000
@@ -136,47 +136,29 @@ object Form1: TForm1
     TabOrder = 9
     Thousands = False
   end
-  object Edit5: TEdit
-    Left = 8
-    Height = 29
-    Top = 91
-    Width = 80
-    OnChange = Edit5Change
-    TabOrder = 10
-    Text = '127.0.0.1'
-  end
-  object Label5: TLabel
-    Left = 96
-    Height = 17
-    Top = 93
-    Width = 30
-    Caption = 'BC IP'
-    ParentColor = False
-  end
   object IdUDPClient1: TIdUDPClient
-    BoundIP = '127.0.0.1'
+    Active = True
     BoundPort = 10110
-    BoundPortMax = 20000
-    Host = '127.0.0.1'
-    Port = 10112
+    Port = 0
     left = 32
     top = 192
   end
   object Timer1: TTimer
     Interval = 250
     OnTimer = Timer1Timer
-    left = 304
-    top = 200
+    left = 248
+    top = 192
   end
   object IdHTTPServer1: TIdHTTPServer
+    Active = True
     Bindings = <>
     OnCommandGet = IdHTTPServer1CommandGet
     left = 144
     top = 192
   end
-  object Timer2: TTimer
-    OnTimer = Timer2Timer
-    left = 352
+  object IdUDPClient2: TIdUDPClient
+    Port = 0
+    left = 376
     top = 104
   end
 end
