@@ -29,26 +29,20 @@ type
     IdUDPClient1: TIdUDPClient;
     Memo1: TMemo;
     Timer1: TTimer;
+    Timer2: TTimer;
     UpDown1: TUpDown;
     UpDown2: TUpDown;
     UpDown3: TUpDown;
     procedure Button1Click(Sender: TObject);
     procedure Edit1Change(Sender: TObject);
+    procedure Edit4Change(Sender: TObject);
     procedure Edit5Change(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure IdHTTPServer1CommandGet(AContext: TIdContext;
       ARequestInfo: TIdHTTPRequestInfo; AResponseInfo: TIdHTTPResponseInfo);
-    procedure IdQOTDUDP1Connected(Sender: TObject);
-    procedure IdUDPClient1Connected(Sender: TObject);
-    procedure IdUDPClient1Disconnected(Sender: TObject);
-    procedure IdUDPClient1Status(ASender: TObject; const AStatus: TIdStatus;
-      const AStatusText: string);
-    procedure Memo1Change(Sender: TObject);
     procedure StopClick(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
-    procedure UpDown3Changing(Sender: TObject; var AllowChange: Boolean);
-    procedure UpDown3ChangingEx(Sender: TObject; var AllowChange: Boolean;
-      NewValue: SmallInt; Direction: TUpDownDirection);
+    procedure Timer2Timer(Sender: TObject);
   private
 
   public
@@ -67,27 +61,27 @@ implementation
 
 { TForm1 }
 
-procedure TForm1.IdUDPClient1Connected(Sender: TObject);
-begin
-
-end;
-
-procedure TForm1.IdQOTDUDP1Connected(Sender: TObject);
-begin
-
-end;
-
 procedure TForm1.Edit1Change(Sender: TObject);
 begin
   Timer1.Interval :=  StrToInt( Edit1.Text);
 end;
 
+procedure TForm1.Edit4Change(Sender: TObject);
+begin
+  //IdUDPClient1.active := False;
+  IdUDPClient1.Disconnect;
+IdUDPClient1.BoundPort :=  UpDown3.Position;
+IdUDPClient1.Connect;
+IdUDPClient1.active := True;
+end;
+
 procedure TForm1.Edit5Change(Sender: TObject);
 begin
-IdUDPClient1.active := False;
-   IdUDPClient1.Host := Edit5.text;
-   IdUDPClient1.active := True;
-
+//IdUDPClient1.active := False;
+//IdUDPClient1.Disconnect;
+IdUDPClient1.BoundIP := Edit5.text;
+//IdUDPClient1.Connect;
+//IdUDPClient1.active := True;
 end;
 
 procedure TForm1.Button1Click(Sender: TObject);
@@ -98,7 +92,6 @@ end;
 procedure TForm1.FormCreate(Sender: TObject);
 begin
   Memo1.Lines.Clear;
-  IdHTTPServer1.Active := True;
 end;
 
 procedure TForm1.IdHTTPServer1CommandGet(AContext: TIdContext;
@@ -116,24 +109,6 @@ begin
 
 end;
 
-procedure TForm1.IdUDPClient1Disconnected(Sender: TObject);
-begin
-
-end;
-
-procedure TForm1.IdUDPClient1Status(ASender: TObject; const AStatus: TIdStatus;
-  const AStatusText: string);
-begin
-
-Memo1.Lines.Add(AStatusText);
-
-end;
-
-procedure TForm1.Memo1Change(Sender: TObject);
-begin
-
-end;
-
 procedure TForm1.StopClick(Sender: TObject);
 begin
   Timer1.Enabled := False;
@@ -144,7 +119,7 @@ begin
 
   //http://ww2.indyproject.org/docsite/html/frames.html?frmname=topic&frmfile=index.html
 
-myText := IdUDPClient1.ReceiveString(100);
+myText := IdUDPClient1.ReceiveString(1);
   myText := Trim(myText);
 
    if (myText <> '') then
@@ -159,19 +134,16 @@ If ( lineCount > UpDown2.Position ) then
      Memo1.Lines.Clear;
      lineCount := 0;
      end;
-
+     ;
+     //IdUDPClient1.Disconnect;
 end;
 
-procedure TForm1.UpDown3Changing(Sender: TObject; var AllowChange: Boolean);
+procedure TForm1.Timer2Timer(Sender: TObject);
 begin
-  IdUDPClient1.Port :=  UpDown3.Position;
+  //IdHTTPServer1.Active := True;
 end;
 
-procedure TForm1.UpDown3ChangingEx(Sender: TObject; var AllowChange: Boolean;
-  NewValue: SmallInt; Direction: TUpDownDirection);
-begin
-  IdUDPClient1.Port :=  UpDown3.Position;
-end;
+
 
 end.
 
