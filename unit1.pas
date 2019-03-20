@@ -68,24 +68,25 @@ end;
 
 procedure TForm1.Edit4Change(Sender: TObject);
 begin
-  //IdUDPClient1.active := False;
-  IdUDPClient1.Disconnect;
+  IdUDPClient1.active := False;
+  //IdUDPClient1.Disconnect;
 IdUDPClient1.BoundPort :=  UpDown3.Position;
-IdUDPClient1.Connect;
+//IdUDPClient1.Connect;
 IdUDPClient1.active := True;
 end;
 
 procedure TForm1.Edit5Change(Sender: TObject);
 begin
-//IdUDPClient1.active := False;
+IdUDPClient1.active := False;
 //IdUDPClient1.Disconnect;
 IdUDPClient1.BoundIP := Edit5.text;
 //IdUDPClient1.Connect;
-//IdUDPClient1.active := True;
+IdUDPClient1.active := True;
 end;
 
 procedure TForm1.Button1Click(Sender: TObject);
 begin
+IdUDPClient1.active := True;
     Timer1.Enabled := True;
 end;
 
@@ -111,7 +112,8 @@ end;
 
 procedure TForm1.StopClick(Sender: TObject);
 begin
-  Timer1.Enabled := False;
+IdUDPClient1.active := False;
+Timer1.Enabled := False;
 end;
 
 procedure TForm1.Timer1Timer(Sender: TObject);
