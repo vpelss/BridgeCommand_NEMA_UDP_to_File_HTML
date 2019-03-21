@@ -3,19 +3,19 @@ Compile with Lasarus / FPC.
 Install Indy https://www.indyproject.org/
 For Linux, set ports > 1024 if not running as root
 
-This program will take the bridgecommand-bc UDP output and makes it accessible in two formats, a text file and from a simple HTML server.
+This program will take the bridgecommand-bc UDP output and makes it accessible in two formats, a text file and also from a simple HTML server.
 
-The format is 6 lines of NEMA text.
+The output format is 6 lines of NEMA text.
 Data is updated as set in the program. 
-bridgecommand-bc sends 6 lines of UDP NEMA text at 250 ms intervals (between each line)
+bridgecommand-bc sends 6 lines/datagrams of UDP NEMA text at 250 ms intervals (between each line)
 
-I am using this to allow web browsers to read this NEMA text and to also display it in an instument format using HTML, images, and JavaScript.
-Easy to modify and design.
-No need to compile for an OS.
+I am using this to allow web browsers to read this NEMA text to display it in an instument format using HTML, images, and JavaScript.
+Easy to modify and design IMO.
+No need to compile output instramentation for an OS.
 
-It is hoped that this might be built into future bridgecommand-bc versions. 
+It is hoped that this HTML output might be built into future bridgecommand-bc versions. If not, this little program can be used.
 
-If fancy graphics are required, webgl or some clever application of images and jquey rotate modules might be used. http://jqueryrotate.com/
+Instramuntation can be built using webgl or some clever application of images, video or jquey rotate modules. http://jqueryrotate.com/
 
 -------------------------------------
 Sample Output:
