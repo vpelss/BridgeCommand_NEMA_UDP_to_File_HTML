@@ -5,7 +5,7 @@ unit Unit1;
 interface
 
 uses
-  cthreads, Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, ExtCtrls,
+   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, ExtCtrls,
   ComCtrls,  IdHTTPServer, IdUDPClient, IdComponent, IdContext, IdCustomHTTPServer;
 
 type
