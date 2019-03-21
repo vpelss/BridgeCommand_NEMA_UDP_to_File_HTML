@@ -16,3 +16,145 @@ No need to compile for an OS.
 It is hoped that this might be built into future bridgecommand-bc versions. 
 
 If fancy graphics are required, webgl or some clever application of images and jquey rotate modules might be used. http://jqueryrotate.com/
+
+-------------------------------------
+Sample Output:
+
+$IIRPM,S,2,-1,100,A*6E
+$GPRMC,161638,A,5002.189,N,00959.085,W,1.15,242.076721,061117,,,A*62
+$GPGLL,5002.189,N,00959.085,W,161639,A,A*50
+$GPGGA,161639,5002.189,N,00959.085,W,8,8,0.9,0.0,M,0.0,M,,*5D
+$IIRSA,7,A,,*36
+$IIRPM,S,1,1,100,A*40
+$IIRPM,S,2,-1,100,A*6E
+
+--------------------------------------
+http://www.catb.org/gpsd/NMEA.html#_gga_global_positioning_system_fix_data
+---------------------------------------
+
+$II - Integrated Instrumentation
+$GP - Global Positioning System receiver
+
+--------------------------
+        1 2 3   4   5 6
+        | | |   |   | |
+ $--RPM,a,x,x.x,x.x,A*hh<CR><LF>
+Field Number:
+1. Sourse, S = Shaft, E = Engine
+2 Engine or shaft number
+3 Speed, Revolutions per minute
+4 Propeller pitch, % of maximum, "-" means astern
+5 Status, A means data is valid
+6 Checksum
+
+--------------------------------------
+RMC - Recommended Minimum Navigation Information
+This is one of the sentences commonly emitted by GPS units.
+                                                          12
+        1         2 3       4 5        6  7   8   9    10 11|  13
+        |         | |       | |        |  |   |   |    |  | |   |
+ $--RMC,hhmmss.ss,A,llll.ll,a,yyyyy.yy,a,x.x,x.x,xxxx,x.x,a,m,*hh<CR><LF>
+Field Number:
+
+UTC Time
+Status, V=Navigation receiver warning A=Valid
+Latitude
+N or S
+Longitude
+E or W
+Speed over ground, knots
+Track made good, degrees true
+Date, ddmmyy
+Magnetic Variation, degrees
+E or W
+FAA mode indicator (NMEA 2.3 and later)
+Checksum
+A status of V means the GPS has a valid fix that is below an internal quality threshold, e.g. because the dilution of precision is too high or an elevation mask test failed.
+Example: $GNRMC,001031.00,A,4404.13993,N,12118.86023,W,0.146,,100117,,,A*7B
+
+--------------------------------------
+
+GLL - Geographic Position - Latitude/Longitude
+This is one of the sentences commonly emitted by GPS units.
+
+        1       2 3        4 5         6 7   8
+        |       | |        | |         | |   |
+ $--GLL,llll.ll,a,yyyyy.yy,a,hhmmss.ss,a,m,*hh<CR><LF>
+Field Number:
+
+Latitude
+N or S (North or South)
+Longitude
+E or W (East or West)
+Universal Time Coordinated (UTC)
+Status A - Data Valid, V - Data Invalid
+FAA mode indicator (NMEA 2.3 and later)
+Checksum
+
+Example: $GNGLL,4404.14012,N,12118.85993,W,001037.00,A,A*67
+
+--------------------------------------
+
+This is one of the sentences commonly emitted by GPS units.
+
+Time, Position and fix related data for a GPS receiver.
+
+                                                      11
+        1         2       3 4        5 6 7  8   9  10 |  12 13  14   15
+        |         |       | |        | | |  |   |   | |   | |   |    |
+ $--GGA,hhmmss.ss,llll.ll,a,yyyyy.yy,a,x,xx,x.x,x.x,M,x.x,M,x.x,xxxx*hh<CR><LF>
+Field Number:
+
+Universal Time Coordinated (UTC)
+Latitude
+N or S (North or South)
+Longitude
+E or W (East or West)
+GPS Quality Indicator,
+0 - fix not available,
+1 - GPS fix,
+2 - Differential GPS fix (values above 2 are 2.3 features)
+3 = PPS fix
+4 = Real Time Kinematic
+5 = Float RTK
+6 = estimated (dead reckoning)
+7 = Manual input mode
+8 = Simulation mode
+Number of satellites in view, 00 - 12
+Horizontal Dilution of precision (meters)
+Antenna Altitude above/below mean-sea-level (geoid) (in meters)
+Units of antenna altitude, meters
+Geoidal separation, the difference between the WGS-84 earth ellipsoid and mean-sea-level (geoid), "-" means mean-sea-level below ellipsoid
+Units of geoidal separation, meters
+Age of differential GPS data, time in seconds since last SC104 type 1 or 9 update, null field when DGPS is not used
+Differential reference station ID, 0000-1023
+Checksum
+
+Example:
+$GNGGA,001043.00,4404.14036,N,12118.85961,W,1,12,0.98,1113.0,M,-21.3,M,,*47
+
+--------------------------------------
+
+        1   2 3   4 5
+        |   | |   | |
+ $--RSA,x.x,A,x.x,A*hh<CR><LF>
+Field Number:
+Starboard (or single) rudder sensor, "-" means Turn To Port
+Status, A means data is valid
+Port rudder sensor
+Status, A means data is valid
+Checksum
+
+--------------------------
+
+RPM - Revolutions
+        1 2 3   4   5 6
+        | | |   |   | |
+ $--RPM,a,x,x.x,x.x,A*hh<CR><LF>
+Field Number:
+Sourse, S = Shaft, E = Engine
+Engine or shaft number
+Speed, Revolutions per minute
+Propeller pitch, % of maximum, "-" means astern
+Status, A means data is valid
+Checksum
