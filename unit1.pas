@@ -5,8 +5,8 @@ unit Unit1;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, ExtCtrls,
-  ComCtrls, IdQOTDUDP, IdHTTP, IdHTTPServer, IdUDPClient, IdComponent, IdCustomHTTPServer, IdContext;
+  cthreads, Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, ExtCtrls,
+  ComCtrls,  IdHTTPServer, IdUDPClient, IdComponent, IdContext, IdCustomHTTPServer;
 
 type
 
@@ -19,13 +19,13 @@ type
     Edit3: TEdit;
     Edit4: TEdit;
     IdHTTPServer1: TIdHTTPServer;
-    IdUDPClient2: TIdUDPClient;
+    IdUDPClient1: TIdUDPClient;
     Label1: TLabel;
     Label2: TLabel;
     Label3: TLabel;
     Label4: TLabel;
+    Label5: TLabel;
     Stop: TButton;
-    IdUDPClient1: TIdUDPClient;
     Memo1: TMemo;
     Timer1: TTimer;
     UpDown1: TUpDown;
@@ -39,6 +39,7 @@ type
       ARequestInfo: TIdHTTPRequestInfo; AResponseInfo: TIdHTTPResponseInfo);
     procedure StopClick(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
+    procedure Timer2Timer(Sender: TObject);
   private
 
   public
@@ -57,8 +58,9 @@ implementation
 
 { TForm1 }
 
-//bc sends 6 NEMA datagrams every 250 ms
-//we
+//bc sends 6 NEMA UDP datagrams every 250 ms
+ //for linux must use 8080 as port as you must be root to assign ports under 1024, WTF!
+// for linux: comment out:  {$IFDEF UseCThreads} and {$ENDIF}
 
 procedure TForm1.Edit1Change(Sender: TObject);
 begin
@@ -67,10 +69,8 @@ end;
 
 procedure TForm1.Edit4Change(Sender: TObject);
 begin
-  IdUDPClient1.active := False;
-  //IdUDPClient1.Disconnect;
+IdUDPClient1.active := False;
 IdUDPClient1.BoundPort :=  UpDown3.Position;
-//IdUDPClient1.Connect;
 IdUDPClient1.active := True;
 end;
 
@@ -89,7 +89,7 @@ end;
 procedure TForm1.IdHTTPServer1CommandGet(AContext: TIdContext;
   ARequestInfo: TIdHTTPRequestInfo; AResponseInfo: TIdHTTPResponseInfo);
 begin
-  AResponseInfo.ContentText := '<html><head><title>My First Response</title></head>' +
+   AResponseInfo.ContentText := '<html><head><title>My First Response</title></head>' +
   '<body>Command: ' + ARequestInfo.Command +
   '<br />Host: ' + ARequestInfo.Host +
   '<br />URI: ' + ARequestInfo.URI +
@@ -98,8 +98,9 @@ begin
   '</pre></body></html>';
 
   AResponseInfo.ContentText := fullOutput;
-
 end;
+
+
 
 procedure TForm1.StopClick(Sender: TObject);
 begin
@@ -130,6 +131,13 @@ If ( lineCount > UpDown2.Position ) then
      ;
      //IdUDPClient1.Disconnect;
 end;
+
+procedure TForm1.Timer2Timer(Sender: TObject);
+begin
+
+end;
+
+
 
 
 
