@@ -1,7 +1,18 @@
-I intend to find a cross platform way to save the output that is sent to UDP ports to a local text file which will be updated at a sufficiently high rate).
-The intent is to be able to feed the required data to a web browser which will be coded in JS to act as any sort of instrument easily across almost all platforms.
-There would be no need to compile instruments for different platforms.
-The JS code will be loading the text file on a frequent basis using AJAX calls.
-The text file would best be saved in JSON format if possible.
+Works with Windows + linux.
+Compile with Lasarus / FPC.
+Install Indy https://www.indyproject.org/
+For Linux, set ports > 1024 if not running as root
+
+This program will take the bridgecommand-bc UDP output and makes it accessible in two formats, a text file and from a simple HTML server.
+
+The format is 6 lines of NEMA text.
+Data is updated as set in the program. 
+bridgecommand-bc sends 6 lines of UDP NEMA text at 250 ms intervals (between each line)
+
+I am using this to allow web browsers to read this NEMA text and to also display it in an instument format using HTML, images, and JavaScript.
+Easy to modify and design.
+No need to compile for an OS.
+
+It is hoped that this might be built into future bridgecommand-bc versions. 
+
 If fancy graphics are required, webgl or some clever application of images and jquey rotate modules might be used. http://jqueryrotate.com/
-If another PC terminal requires access to this text file, local file sharing would be enabled, and the path be set (in the browser).
