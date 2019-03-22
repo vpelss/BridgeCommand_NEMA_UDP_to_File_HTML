@@ -89,6 +89,9 @@ end;
 procedure TForm1.IdHTTPServer1CommandGet(AContext: TIdContext;
   ARequestInfo: TIdHTTPRequestInfo; AResponseInfo: TIdHTTPResponseInfo);
 begin
+   AResponseInfo.ResponseText:= 'Access-Control-Allow-Origin: http://127.0.0.1:8080/';
+  //Access-Control-Allow-Origin: http://siteA.com
+
    AResponseInfo.ContentText := '<html><head><title>My First Response</title></head>' +
   '<body>Command: ' + ARequestInfo.Command +
   '<br />Host: ' + ARequestInfo.Host +
