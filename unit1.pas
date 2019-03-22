@@ -89,8 +89,10 @@ end;
 procedure TForm1.IdHTTPServer1CommandGet(AContext: TIdContext;
   ARequestInfo: TIdHTTPRequestInfo; AResponseInfo: TIdHTTPResponseInfo);
 begin
-   AResponseInfo.ResponseText:= 'Access-Control-Allow-Origin: http://127.0.0.1:8080/';
-  //Access-Control-Allow-Origin: http://siteA.com
+    //CORS access
+  //https://jonlennartaasenden.wordpress.com/2012/08/08/cors-for-indy/
+  with aResponseInfo do
+CustomHeaders.AddValue('Access-Control-Allow-Origin','*');
 
    AResponseInfo.ContentText := '<html><head><title>My First Response</title></head>' +
   '<body>Command: ' + ARequestInfo.Command +

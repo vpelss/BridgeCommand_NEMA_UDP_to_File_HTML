@@ -1,7 +1,7 @@
 object Form1: TForm1
-  Left = 277
+  Left = 278
   Height = 311
-  Top = 148
+  Top = 153
   Width = 432
   Caption = 'BC UDP to File and HTML'
   ClientHeight = 311
