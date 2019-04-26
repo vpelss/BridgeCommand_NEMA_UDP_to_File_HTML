@@ -3,22 +3,23 @@ Compile with Lazarus / Free Pascal. https://www.lazarus-ide.org/ https://www.fre
 Install Indy https://www.indyproject.org/
 Note: For Linux, set ports > 1024 if not running as root
 
-BridgeCommand_NEMA_UDP_to_File_HTML will take the bridgecommand-bc UDP NEMA output and saves it as NEMA.txt and also outputs it using a simple HTML server.
+ will take the bridgecommand-bc UDP NEMA output and saves it as NEMA.txt and also outputs it using a simple HTML server.
 
 The output format is 6 lines of NEMA text. 
 bridgecommand-bc sends one line/datagrams of UDP NEMA text at 250 ms intervals.
 The NEMA output data is: $GPRMC , $GPGLL ,$GPGGA , $IIRSA ,$IIRPM , $IIRPM
 
-I am using this to allow web browsers to read this NEMA text to display it in an instument format using HTML, images, and JavaScript.
-Easy to modify and design IMO.
-No need to compile output instramentation for an OS.
+The output is intended to be used for web pages like JS_Instrumentation_Demo.html which will 
+take the NEMA data and display it on easily modifiable instrumentation using HTML, IMG and JavaScript.
+No third party programs are needed and it is cross platform compatable.
 
-It is hoped that this HTML output might be built into future bridgecommand-bc versions. If not, this little program can be used.
+It is hoped that this NEMA.txt output might be built into future bridgecommand-bc versions. 
+If not, BridgeCommand_NEMA_UDP_to_File_HTML can be used.
 
-Instramuntation can be built using webgl or some clever application of images, video or jquey rotate modules. http://jqueryrotate.com/
+Instramuntation can also be built using webgl or some clever application of images, video or jquey rotate modules. http://jqueryrotate.com/
 
 -------------------------------------
-Sample Output:
+bridgecommand-bc UDP NEMA Sample Output:
 
 $IIRPM,S,2,-1,100,A*6E
 $GPRMC,161638,A,5002.189,N,00959.085,W,1.15,242.076721,061117,,,A*62
