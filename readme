@@ -1,13 +1,13 @@
 Works with Windows + linux.
-Compile with Lazarus / FPC.
+Compile with Lazarus / Free Pascal. https://www.lazarus-ide.org/ https://www.freepascal.org/
 Install Indy https://www.indyproject.org/
-For Linux, set ports > 1024 if not running as root
+Note: For Linux, set ports > 1024 if not running as root
 
-This program will take the bridgecommand-bc UDP output and makes it accessible in two formats, a text file and also from a simple HTML server.
+BridgeCommand_NEMA_UDP_to_File_HTML will take the bridgecommand-bc UDP NEMA output and saves it as NEMA.txt and also outputs it using a simple HTML server.
 
-The output format is 6 lines of NEMA text.
-Data is updated as set in the program. 
-bridgecommand-bc sends 6 lines/datagrams of UDP NEMA text at 250 ms intervals (between each line)
+The output format is 6 lines of NEMA text. 
+bridgecommand-bc sends one line/datagrams of UDP NEMA text at 250 ms intervals.
+The NEMA output data is: $GPRMC , $GPGLL ,$GPGGA , $IIRSA ,$IIRPM , $IIRPM
 
 I am using this to allow web browsers to read this NEMA text to display it in an instument format using HTML, images, and JavaScript.
 Easy to modify and design IMO.
