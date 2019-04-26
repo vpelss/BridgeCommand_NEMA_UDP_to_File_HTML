@@ -1,5 +1,5 @@
 Works with Windows + linux.
-Compile with Lasarus / FPC.
+Compile with Lazarus / FPC.
 Install Indy https://www.indyproject.org/
 For Linux, set ports > 1024 if not running as root
 
