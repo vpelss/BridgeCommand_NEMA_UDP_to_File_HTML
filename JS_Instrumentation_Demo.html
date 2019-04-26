@@ -7,36 +7,69 @@
     <script src="https://code.jquery.com/jquery-3.1.0.js">
     </script>
     <script src="https://www.emogic.com/jqueryrotate/jQueryRotate.js">
-    </script>
-  
+    </script>  
   <title>BridgeCommand JS Instrumentation</title>
 </head>
 <body>
-
-<img id='rudder' src="http://www.stickpng.com/assets/images/58f8bcf70ed2bdaf7c128307.png" width='100'>
-
-<img id='compass' src="https://ceco.net/autocad-download/free-drawings-dwg-dxf/autocad-drawing-north-arrow-14-compass-rose-symbols-signs-signals-arrows-dwg-dxf-81.png" width='200'>
   
- <!-- http://jqueryrotate.com/ 
-https://images-na.ssl-images-amazon.com/images/I/61lhqZxJ36L._UX522_.jpg
--->
-<p>
-HTTP: <input type="checkbox" id="checkBoxHTTP" onchange="checkHTTP()">    
-<p>
-OR
-<p>
-   
-  <div id="uploadFile_div">
+<style>
+.container 
+  {
+  position: relative;
+  }
+.over 
+  {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  }    
+ </style>
+  
+   <table>
+    <tr>
+      <td>
+       HTTP: <input type="checkbox" id="checkBoxHTTP" onchange="checkHTTP()">  
+        </td>
+       <td>
+       or  
+        </td>
+       <td>
+       <div id="uploadFile_div">
    <input id='fileinput' type="file" onchange='interval = setInterval( fileSelected , 50);' />
    </div>
+        </td>
+      </tr>  
+  </table>
   
-<p>
+  <table>     
+  <tr>
+    <td width='33%' class='container'>
+      <img src="https://www.emogic.com/bc/rpm2.png" width='95%'>
+      <img class="over" id='portRPM' src="https://www.emogic.com/bc/needle.png" width='95%'>
+    </td>
+    <td width='33%'><img id='compass' src="https://www.emogic.com/bc/compass.png" width='95%'></td>
+    <td width='33%' class='container'>
+      <img src="https://www.emogic.com/bc/rpm2.png" width='95%'><img class="over" id='starboardRPM' src="https://www.emogic.com/bc/needle.png" width='95%'>   
+    </td>
+    </tr>  
+    
+  <tr>
+   <td width='33%'></td>
+   <td width='33%' class='container'>
+     <img src="https://www.emogic.com/bc/rudder.png" width='95%'>
+     <img id='rudder'src="https://www.emogic.com/bc/rudderneedle.png" width='95%' class="over">
+    </td>
+   <td width='33%'></td>
+ </tr>
+  </table>
+  
+  <table>
 
-  <div id='nEMAText'></div>
+  </table>
+  
+<div id='nEMAText'></div>
   
 <script>
-     
-var filet = 'file:///home/adsiltia/Desktop/bridgecommand/bc-master/NEMA.txt';
 var interval;
   
 function getHTML() 
@@ -56,33 +89,44 @@ function processHTML(data)
     // $--RMC
     var RMC = {};
     var RSA = {}; 
+    var RPM = {}; 
       
     for (var i = 0, len = DataArray.length; i < len; i++) 
         {
         $( "#nEMAText" ).append( DataArray[i]  + '</br>');
         LineArray = DataArray[i].split(","); //turn DataArray[i] (a string) into an array        
-        //LineArray = DataArray[i].split(","); //turn line data into an array  
-        //$( "#nEMAText" ).append( LineArray[1] + '</br>');
-        //$( "#nEMAText" ).append( LineArray[1] + '</br>');
-        if ( LineArray[0] == '$GPRMC' )
+
+       if ( LineArray[0] == '$GPRMC' )
           {
           RMC['UTC'] = LineArray[1];   
           RMC['Status'] = LineArray[2];
           RMC['Track'] = LineArray[8];
-          $( "#nEMAText" ).append( RMC['Track']  + '</br>');
           var ang = -1 * RMC['Track'];  
-          //$("#compass").rotate({ angle: $("#compass").getRotateAngle() , animateTo:ang });    
           $("#compass").rotate({ angle:ang  }); 
           }
-        if ( LineArray[0] == '$IIRSA' ) 
+
+        if ( LineArray[0] == '$IIRSA' )  
           {
           RSA['Starboard'] = LineArray[1];  
-          //RMC['Status'] = LineArray[2]; 
-          //RMC['Magnetic Variation'] = LineArray[10];
-          $( "#nEMAText" ).append( RSA['Starboard']  + '</br>');
-          var ang = - 1 * RSA['Starboard'];  
-          //$("#rudder").rotate({ angle: $("#rudder").getRotateAngle() , animateTo:ang }); 
+          var ang = - 2 * RSA['Starboard'];  
           $("#rudder").rotate({ angle: ang }); 
+          } 
+
+        if ( LineArray[0] == '$IIRPM' ) 
+          {
+          RPM['Number'] = LineArray[2]; 
+          RPM['RMP'] = Math.abs( LineArray[3] ); //no neg RPM
+          if ( RPM['Number'] == 1 ) 
+            {
+            var ang = .9 * RPM['RMP'];  
+            $("#portRPM").rotate({ angle: ang }); 
+            }
+          if ( RPM['Number'] == 2 ) 
+            {
+            var ang = .9 * RPM['RMP'];  
+            $("#starboardRPM").rotate({ angle: ang }); 
+            }
+          $( "#nEMAText" ).append( RPM['Number'] + ' , ' + RPM['RMP']  + '</br>');
           } 
           
         }       
@@ -102,8 +146,6 @@ function fileSelected()
    reader.onprogress = updateProgress;
    reader.onload = loaded;
    reader.onerror = errorHandler;
-       
-   //setTimeout( fileSelected , 250);
    } 
     
 function updateProgress(evt) {
@@ -117,20 +159,23 @@ function updateProgress(evt) {
   }
 }
 
-function loaded(evt) {
+function loaded(evt) 
+  {
   // Obtain the read file data
   var fileString = evt.target.result;
   // Handle file dump
-   $( "#nEMAText" ).html( fileString );  
+  $( "#nEMAText" ).html( fileString );  
   processHTML(fileString);
-  //alert(fileString);
-} 
+  } 
 
-function errorHandler(evt) {
-  if(evt.target.error.name == "NotReadableError") {
-    // The file could not be read
-  }
-}
+function errorHandler(evt) 
+    {
+    if(evt.target.error.name == "NotReadableError") 
+      {
+      // The file could not be read
+      $( "#nEMAText" ).html( "File read error" ); 
+      }
+    }
   
 function checkHTTP()
   {  
@@ -143,11 +188,9 @@ function checkHTTP()
     document.getElementById('uploadFile_div').innerHTML = document.getElementById('uploadFile_div').innerHTML; 
     interval = setInterval( getHTML , 50); 
     } 
-
   }  
         
   </script> 
-  d
   
 </body>
 </html>
