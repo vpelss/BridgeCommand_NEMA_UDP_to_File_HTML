@@ -37,6 +37,8 @@ type
     procedure FormCreate(Sender: TObject);
     procedure IdHTTPServer1CommandGet(AContext: TIdContext;
       ARequestInfo: TIdHTTPRequestInfo; AResponseInfo: TIdHTTPResponseInfo);
+    procedure IdUDPClient1Status(ASender: TObject; const AStatus: TIdStatus;
+      const AStatusText: string);
     procedure StopClick(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
     procedure Timer2Timer(Sender: TObject);
@@ -51,6 +53,7 @@ var
   myText : String;
   lineCount : integer;
   fullOutput : String;
+  temp: String;
 
 implementation
 
@@ -84,6 +87,7 @@ end;
 procedure TForm1.FormCreate(Sender: TObject);
 begin
   Memo1.Lines.Clear;
+  Timer1.Interval :=  StrToInt( Edit1.Text);
 end;
 
 procedure TForm1.IdHTTPServer1CommandGet(AContext: TIdContext;
@@ -103,6 +107,13 @@ CustomHeaders.AddValue('Access-Control-Allow-Origin','*');
   '</pre></body></html>';
 
   AResponseInfo.ContentText := fullOutput;
+end;
+
+procedure TForm1.IdUDPClient1Status(ASender: TObject; const AStatus: TIdStatus;
+  const AStatusText: string);
+begin
+  //temp :=   AStatusText;
+
 end;
 
 
