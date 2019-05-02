@@ -30,32 +30,28 @@ body { font-size: 12pt; }
   top: 0px;
   left: 0px;
   }    
-
-#tapeContainer , #tapeContainer3
+#tapeContainer3
   { 
-  width: 100px;
-  height: 60px;
+  width: 33%;
   border-radius: 5px;
   overflow: hidden;
+    border-style: solid;
   }
-  
+.ovHID{ overflow: hidden;}
 #tape3
    {   
    font-family: monospace;
-   Font-Size: 40%;  
+   Font-Size: 40%; 
+   border-style: solid;
    }
-  
-#tape
+#tapeArrow 
   {
-  height: 400px;       
+  text-align: center;
+  vertical-align: text-bottom;
   }
- #tapeArrow {text-align: center;}
-  
+table td
+  {border-style: solid;}  
  </style>
-
-  <div id='tapeContainer'>
-  <img id='tape' src='https://www.emogic.com/compass/styles/compass.jpg'>
-   </div> 
 
 <script>
  
@@ -64,15 +60,7 @@ var tapeNumbers = '160&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;170&nbsp;&nbsp;&nbsp;
 var tapeString = tapeNumbers + '<br>' + tapeLines;  
 </script>
   
-<div id='tapeContainer3'>
- <div id ='tape3'>  160&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;170&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;180&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;190&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;200&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;210&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;220&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;230&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;240&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;250&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;260&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;270&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;280&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;290&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;300&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;310&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;320&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;330&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;340&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;350&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;10&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;20&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;30&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;40&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;50&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;60&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;70&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;80&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;90&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;100&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;110&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;120&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;130&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;140&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;150&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;160&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;170&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;180&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;190&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;200
-<br>
-|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|
-      </div>
-  <div id='tapeArrow'>^</div>
-   </div>
-  
-   <table>
+<table>
     <tr>
       <td>
       HTTP: <input type="checkbox" id="checkBoxHTTP" onchange="checkHTTP()" style='position: relative;z-index: 999;'>  
@@ -104,12 +92,10 @@ var tapeString = tapeNumbers + '<br>' + tapeLines;
       <img src="https://www.emogic.com/bc/rpm2.png" width='95%'><img class="over" id='starboardRPM' src="https://www.emogic.com/bc/needle.png" width='95%'> 
       </div>
     </td>
-    </tr>  
-    
-  </table>
+    </tr>    
+</table>
    
-  <table width='100%'>
-    
+<table width='100%'>    
   <tr>
    <td width='33%'>&nbsp;</td>
    <td width='33%' align='center'>
@@ -117,17 +103,42 @@ var tapeString = tapeNumbers + '<br>' + tapeLines;
     </td>
    <td width='33%'>&nbsp;</td>
  </tr>
+  </table>  
+  
+  <div style='display:inline;'>d</div>
+  
+  <div style='display:inline;'>
     
+       <div id='tapeContainer3'>
+       <div id ='tape3'></div>
+       <div id='tapeArrow'>^</div>
+       </div>
+    
+  </div>
+  
+  <div style='inline;'>a</div>
+  
+<table width='100%'>
+     <tr>
+   <td width='33%'>&nbsp;</td>
+   <td>
+       
+    </td>
+   <td width='33%'>&nbsp;</td>
+ </tr>
+  </table>
+
+<table width='100%'> 
   <tr>
-   <td width='33%'></td>
+   <td width='33%'>&nbsp;</td>
    <td width='33%' class='container'>
      <img src="https://www.emogic.com/bc/rudder.png" width='95%'>
      <img id='rudder' src="https://www.emogic.com/bc/rudderneedle.png" width='95%' class="over">
     </td>
-   <td width='33%'></td>
+   <td width='33%'>&nbsp;</td>
  </tr>
     
-  </table>
+</table>
   
 <div id='nEMAText'></div>
 
@@ -242,23 +253,27 @@ function checkHTTP()
 function moveTape( angle )
 {
 //var shiftAngle = angle;
+var plusminus = '-';
 if (angle > 180)
   {
-  angle = angle - 360; //for 180 - 360 
+  angle = -(angle - 360); //for 180 - 360
+  plusminus = '+';
   }
 var widthTape = document.getElementById("tape3").scrollWidth ; 
 $('#tape3').width( widthTape ); //set tape width so we can center it
-var numberOfDegreesOnTape = tapeLines.length;
+var numberOfDegreesOnTape = tapeLines.length - 3; //why -3 ?
 var percentMove = angle * 100 / numberOfDegreesOnTape;
-$('#tape3').position( { 
-   my: "center-" + percentMove + "% center",
-   at: "center center",
+$('#tape3').position( 
+  { 
+  my: "center" + plusminus + percentMove + "% top",
+  at: "center top",
   of: "#tapeContainer3" ,
-   collision: "none"
-  } );   
+  collision: "none"
+  }
+                  );   
 }
 $('#tape3').html( tapeString );
-moveTape( 150 );
+moveTape( 200 );
   
   </script> 
 
