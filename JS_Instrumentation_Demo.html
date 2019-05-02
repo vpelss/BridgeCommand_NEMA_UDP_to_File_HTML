@@ -32,17 +32,19 @@ body { font-size: 12pt; }
   }    
 #tapeContainer3
   { 
-  width: 33%;
+  
   border-radius: 5px;
   overflow: hidden;
-    border-style: solid;
+  border-style: solid;
+  border-width: 1pt;
   }
 .ovHID{ overflow: hidden;}
 #tape3
    {   
    font-family: monospace;
-   Font-Size: 40%; 
+   Font-Size: 50%; 
    border-style: solid;
+   border-width: 1pt;
    }
 #tapeArrow 
   {
@@ -50,7 +52,7 @@ body { font-size: 12pt; }
   vertical-align: text-bottom;
   }
 table td
-  {border-style: solid;}  
+  {border-style: none;}  
  </style>
 
 <script>
@@ -99,41 +101,27 @@ var tapeString = tapeNumbers + '<br>' + tapeLines;
   <tr>
    <td width='33%'>&nbsp;</td>
    <td width='33%' align='center'>
-    <div id='compassDigital' style='font-family: "IBM Plex Sans", sans-serif;'>0.0</div>
+    <div id='compassDigital' style='font-family: "IBM Plex Sans", sans-serif;'>0.0&#176;</div>
     </td>
    <td width='33%'>&nbsp;</td>
  </tr>
   </table>  
   
-  <div style='display:inline;'>d</div>
+<div style='width:33%; display:inline-block;'>&nbsp;</div>
+<div style='width:33%; display:inline-block;'>
+  <div id='tapeContainer3'>
+    <div id ='tape3'></div>
+    <div id='tapeArrow'>^</div>
+  </div>  
+</div>
+<div style='width:33%; display:inline-block;'>&nbsp;</div>
   
-  <div style='display:inline;'>
-    
-       <div id='tapeContainer3'>
-       <div id ='tape3'></div>
-       <div id='tapeArrow'>^</div>
-       </div>
-    
-  </div>
-  
-  <div style='inline;'>a</div>
-  
-<table width='100%'>
-     <tr>
-   <td width='33%'>&nbsp;</td>
-   <td>
-       
-    </td>
-   <td width='33%'>&nbsp;</td>
- </tr>
-  </table>
-
 <table width='100%'> 
   <tr>
    <td width='33%'>&nbsp;</td>
    <td width='33%' class='container'>
-     <img src="https://www.emogic.com/bc/rudder.png" width='95%'>
-     <img id='rudder' src="https://www.emogic.com/bc/rudderneedle.png" width='95%' class="over">
+     <img src="https://www.emogic.com/bc/rudder2.png" width='95%'>
+     <img id='rudder' src="https://www.emogic.com/bc/rudder2needle.png" width='95%' class="over">
     </td>
    <td width='33%'>&nbsp;</td>
  </tr>
@@ -175,7 +163,7 @@ function processHTML(data)
           RMC['Track'] = LineArray[8];
           var ang = -1 * RMC['Track'];  
           $("#compass").rotate({ angle:ang  });
-          $( "#compassDigital" ).html( String( Math.abs(ang.toFixed(2))) );
+          $( "#compassDigital" ).html( String( Math.abs(ang.toFixed(2))) + '&#176;');
           moveTape( RMC['Track'] );
           }
 
@@ -184,7 +172,7 @@ function processHTML(data)
           {
           RSA['Starboard'] = LineArray[1];  
           var ang = - 2 * RSA['Starboard'];  
-          $("#rudder").rotate({ angle: ang }); 
+          $("#rudder").rotate({ angle: ang , center: ["50%", "14%"] }); 
           } 
 
     //rpm port and starboard    
@@ -272,10 +260,10 @@ $('#tape3').position(
   }
                   );   
 }
-$('#tape3').html( tapeString );
-moveTape( 200 );
+$('#tape3').html( tapeString ); //display tape
+moveTape( 0 ); //set tape
   
-  </script> 
+</script> 
 
 </body>
 </html>
