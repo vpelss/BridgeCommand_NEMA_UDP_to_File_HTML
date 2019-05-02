@@ -7,7 +7,8 @@
   <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.1.0.js">
     </script>
-    <script src="https://www.emogic.com/jqueryrotate/jQueryRotate.js">
+ <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+     <script src="https://www.emogic.com/jqueryrotate/jQueryRotate.js">
     </script>  
     <script>
  var readRate = 100;
@@ -16,8 +17,9 @@ var httpAddress = 'http://127.0.0.1:8080';
   <title>BridgeCommand JS Instrumentation</title>
 </head>
 <body>
-
+  
 <style>
+body { font-size: 12pt; }
 .container 
   {
   position: relative;
@@ -28,8 +30,48 @@ var httpAddress = 'http://127.0.0.1:8080';
   top: 0px;
   left: 0px;
   }    
+
+#tapeContainer , #tapeContainer3
+  { 
+  width: 100px;
+  height: 60px;
+  border-radius: 5px;
+  overflow: hidden;
+  }
+  
+#tape3
+   {   
+   font-family: monospace;
+   Font-Size: 40%;  
+   }
+  
+#tape
+  {
+  height: 400px;       
+  }
+ #tapeArrow {text-align: center;}
+  
  </style>
+
+  <div id='tapeContainer'>
+  <img id='tape' src='https://www.emogic.com/compass/styles/compass.jpg'>
+   </div> 
+
+<script>
  
+var tapeNumbers = '160&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;170&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;180&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;190&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;200&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;210&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;220&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;230&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;240&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;250&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;260&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;270&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;280&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;290&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;300&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;310&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;320&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;330&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;340&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;350&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;10&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;20&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;30&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;40&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;50&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;60&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;70&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;80&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;90&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;100&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;110&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;120&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;130&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;140&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;150&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;160&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;170&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;180&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;190&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;200';
+  var tapeLines = '&nbsp;|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|'; 
+var tapeString = tapeNumbers + '<br>' + tapeLines;  
+</script>
+  
+<div id='tapeContainer3'>
+ <div id ='tape3'>  160&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;170&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;180&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;190&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;200&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;210&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;220&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;230&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;240&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;250&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;260&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;270&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;280&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;290&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;300&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;310&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;320&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;330&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;340&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;350&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;10&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;20&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;30&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;40&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;50&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;60&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;70&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;80&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;90&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;100&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;110&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;120&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;130&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;140&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;150&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;160&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;170&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;180&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;190&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;200
+<br>
+|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|
+      </div>
+  <div id='tapeArrow'>^</div>
+   </div>
+  
    <table>
     <tr>
       <td>
@@ -45,7 +87,7 @@ var httpAddress = 'http://127.0.0.1:8080';
         </td>
       </tr>  
   </table>
-  
+
   <table width='100%'>     
   <tr>
     <td width='33%'>
@@ -65,7 +107,7 @@ var httpAddress = 'http://127.0.0.1:8080';
     </tr>  
     
   </table>
-  
+   
   <table width='100%'>
     
   <tr>
@@ -123,6 +165,7 @@ function processHTML(data)
           var ang = -1 * RMC['Track'];  
           $("#compass").rotate({ angle:ang  });
           $( "#compassDigital" ).html( String( Math.abs(ang.toFixed(2))) );
+          moveTape( RMC['Track'] );
           }
 
     //rudder
@@ -185,15 +228,38 @@ function errorHandler(evt)
   
 function checkHTTP()
   {  
+  
   if (interval > 0) {clearInterval(interval)}; //stop both http and nema.txt
   $( "#nEMAText" ).html( '' );
   if ( document.getElementById("checkBoxHTTP").checked == true )
     {
-    document.getElementById('uploadFile_div').innerHTML = document.getElementById('uploadFile_div').innerHTML; //reset / clear filereader 
+        document.getElementById('uploadFile_div').innerHTML = document.getElementById('uploadFile_div').innerHTML; //reset / clear filereader 
     interval = setInterval( getHTML , readRate ); //start http
     } 
   }  
-        
+
+  
+function moveTape( angle )
+{
+//var shiftAngle = angle;
+if (angle > 180)
+  {
+  angle = angle - 360; //for 180 - 360 
+  }
+var widthTape = document.getElementById("tape3").scrollWidth ; 
+$('#tape3').width( widthTape ); //set tape width so we can center it
+var numberOfDegreesOnTape = tapeLines.length;
+var percentMove = angle * 100 / numberOfDegreesOnTape;
+$('#tape3').position( { 
+   my: "center-" + percentMove + "% center",
+   at: "center center",
+  of: "#tapeContainer3" ,
+   collision: "none"
+  } );   
+}
+$('#tape3').html( tapeString );
+moveTape( 150 );
+  
   </script> 
 
 </body>
