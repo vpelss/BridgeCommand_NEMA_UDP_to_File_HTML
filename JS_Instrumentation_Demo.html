@@ -275,6 +275,7 @@ function setTapeFontSize()
   {
   var widthTapeWindow = $("#tapeContainer").width();
   var fontSizeTape = widthTapeWindow / 20; //tape view approx 20 degrees
+  fontSizeTape = Math.abs(fontSizeTape);
   $("#tape").css( "fontSize", fontSizeTape +'pt' );
   $("#tapeArrow").css( "fontSize", fontSizeTape );    
   }
