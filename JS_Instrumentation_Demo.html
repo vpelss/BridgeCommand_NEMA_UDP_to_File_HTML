@@ -18,7 +18,7 @@ var httpAddress = 'http://127.0.0.1:8080';
 <body>
   
 <style>
-body { font-size: 12pt; }
+body {  }
 .container 
   {
   position: relative;
@@ -40,7 +40,6 @@ body { font-size: 12pt; }
 #tape
    {   
    font-family: monospace;
-   Font-Size: 50%; 
    border-style: solid;
    border-width: 1pt;
    }
@@ -109,7 +108,7 @@ var tapeString = tapeNumbers + '<br>' + tapeLines;
   </table>  
   
 <div style='width:33%; display:inline-block;'>&nbsp;</div>
-<div style='width:33%; display:inline-block;'>
+<div id='tapeMeta' style='width:33%; display:inline-block;'>
   <div id='tapeContainer'>
     <div id ='tape'></div>
     <div id='tapeArrow'>^</div>
@@ -251,7 +250,7 @@ function checkHTTP()
   }  
  
 function moveTape( angle )
-{
+{  
 var plusminus = '-';
 if (angle > 180)
   {
@@ -271,8 +270,19 @@ $('#tape').position(
   }
                   );   
 }
+
+function setTapeFontSize()
+  {
+  var widthTapeWindow = $("#tapeContainer").width();
+  var fontSizeTape = widthTapeWindow / 20; //tape view approx 20 degrees
+  $("#tape").css( "fontSize", fontSizeTape +'pt' );
+  $("#tapeArrow").css( "fontSize", fontSizeTape );    
+  }
+  
 $('#tape').html( tapeString ); //display tape
+setTapeFontSize();
 moveTape( 0 ); //set tape
+$( window ).resize( setTapeFontSize );
   
 </script> 
 
