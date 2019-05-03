@@ -14,6 +14,7 @@ type
 
   TForm1 = class(TForm)
     Button1: TButton;
+    CheckBox1: TCheckBox;
     Edit1: TEdit;
     Edit2: TEdit;
     Edit3: TEdit;
@@ -54,6 +55,7 @@ var
   lineCount : integer;
   fullOutput : String;
   temp: String;
+  counter : integer;
 
 implementation
 
@@ -125,9 +127,10 @@ Timer1.Enabled := False;
 end;
 
 procedure TForm1.Timer1Timer(Sender: TObject);
+var
+  filename : String;
 begin
-
-  //http://ww2.indyproject.org/docsite/html/frames.html?frmname=topic&frmfile=index.html
+   //http://ww2.indyproject.org/docsite/html/frames.html?frmname=topic&frmfile=index.html
 
 myText := IdUDPClient1.ReceiveString(1);
   myText := Trim(myText);
@@ -139,7 +142,14 @@ myText := IdUDPClient1.ReceiveString(1);
       end;
 If ( lineCount > UpDown2.Position ) then
      begin
-     Memo1.Lines.SaveToFile( Edit3.Text );
+      filename := Edit3.Text;
+     if ( CheckBox1.Checked ) then
+          begin
+          filename := filename + counter.ToString;
+          counter :=  counter + 1;
+          end;
+     filename := filename + '.txt';
+     Memo1.Lines.SaveToFile( filename );
      fullOutput := Memo1.lines.Text;
      Memo1.Lines.Clear;
      lineCount := 0;
