@@ -1,4 +1,4 @@
-Works with Windows + linux.
+BridgeCommandNEMAUDPtoFileandHTML will compile with and works in Windows and Linux and Raspbian.
 Compile with Lazarus / Free Pascal. https://www.lazarus-ide.org/ https://www.freepascal.org/
 Install Indy https://www.indyproject.org/
 Note: For Linux, set ports > 1024 if not running as root
