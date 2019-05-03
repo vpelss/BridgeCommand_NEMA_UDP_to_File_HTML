@@ -3,6 +3,8 @@ Compile with Lazarus / Free Pascal. https://www.lazarus-ide.org/ https://www.fre
 Install Indy https://www.indyproject.org/
 Note: For Linux, set ports > 1024 if not running as root
 
+JS_Instrumentation_Demo.html is tested in Chrome and Firefox, occasionally in IE.
+
 This program will take the bridgecommand-bc UDP NEMA output and saves it as NEMA.txt and also outputs it using a simple HTML server.
 
 The output format is 6 lines of NEMA text. 
