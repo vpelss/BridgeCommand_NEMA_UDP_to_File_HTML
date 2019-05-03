@@ -4,14 +4,13 @@
 <meta name="description" content="NEMA">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
-  <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.1.0.js">
     </script>
  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
      <script src="https://www.emogic.com/jqueryrotate/jQueryRotate.js">
     </script>  
     <script>
- var readRate = 100;
+ var readRate = 1500;
 var httpAddress = 'http://127.0.0.1:8080'; 
     </script>
   <title>BridgeCommand JS Instrumentation</title>
@@ -30,16 +29,15 @@ body { font-size: 12pt; }
   top: 0px;
   left: 0px;
   }    
-#tapeContainer3
-  { 
-  
+#tapeContainer
+  {  
   border-radius: 5px;
   overflow: hidden;
   border-style: solid;
   border-width: 1pt;
   }
 .ovHID{ overflow: hidden;}
-#tape3
+#tape
    {   
    font-family: monospace;
    Font-Size: 50%; 
@@ -65,7 +63,7 @@ var tapeString = tapeNumbers + '<br>' + tapeLines;
 <table>
     <tr>
       <td>
-      HTTP: <input type="checkbox" id="checkBoxHTTP" onchange="checkHTTP()" style='position: relative;z-index: 999;'>  
+      HTTP: <input type="radio" name='radioB' id="checkBoxHTTP" onchange="checkHTTP()" style='position: relative;z-index: 999;'>  
         </td>
        <td>
        or  
@@ -75,6 +73,9 @@ var tapeString = tapeNumbers + '<br>' + tapeLines;
    <input id='fileinput' type="file" onchange='if (interval > 0) {clearInterval(interval)}; interval = setInterval( fileSelected , readRate );' />
    </div>
         </td>
+      <td>
+        DEMO: <input type="radio" name='radioB' id="checkBoxDEMO" onchange="checkHTTP();" style='position: relative;z-index: 999;'> 
+      </td>
       </tr>  
   </table>
 
@@ -101,7 +102,7 @@ var tapeString = tapeNumbers + '<br>' + tapeLines;
   <tr>
    <td width='33%'>&nbsp;</td>
    <td width='33%' align='center'>
-    <div id='compassDigital' style='font-family: "IBM Plex Sans", sans-serif;'>0.0&#176;</div>
+    <div id='compassDigital'>0.0&#176;</div>
     </td>
    <td width='33%'>&nbsp;</td>
  </tr>
@@ -109,8 +110,8 @@ var tapeString = tapeNumbers + '<br>' + tapeLines;
   
 <div style='width:33%; display:inline-block;'>&nbsp;</div>
 <div style='width:33%; display:inline-block;'>
-  <div id='tapeContainer3'>
-    <div id ='tape3'></div>
+  <div id='tapeContainer'>
+    <div id ='tape'></div>
     <div id='tapeArrow'>^</div>
   </div>  
 </div>
@@ -132,6 +133,15 @@ var tapeString = tapeNumbers + '<br>' + tapeLines;
 
 <script>
 var interval;
+var DEMOCount = 0;
+  
+function getDEMO() 
+    { 
+    var httpDEMOPath = 'https://emogic.com/cgi/bc/NEMA' + DEMOCount + '.txt';
+    DEMOCount += 1;
+    $.get( httpDEMOPath , processHTML )
+      .fail(function() { DEMOCount = 0; $( "#nEMAText" ).html( 'ajax error' ); }); 
+    } 
 
 function getHTML() 
     { 
@@ -226,41 +236,42 @@ function errorHandler(evt)
     }
   
 function checkHTTP()
-  {  
-  
+  {   
   if (interval > 0) {clearInterval(interval)}; //stop both http and nema.txt
   $( "#nEMAText" ).html( '' );
+  if ( document.getElementById("checkBoxDEMO").checked == true )
+    {
+    interval = setInterval( getDEMO , readRate ); //start http
+    }    
   if ( document.getElementById("checkBoxHTTP").checked == true )
     {
-        document.getElementById('uploadFile_div').innerHTML = document.getElementById('uploadFile_div').innerHTML; //reset / clear filereader 
+    document.getElementById('uploadFile_div').innerHTML = document.getElementById('uploadFile_div').innerHTML; //reset / clear filereader 
     interval = setInterval( getHTML , readRate ); //start http
     } 
   }  
-
-  
+ 
 function moveTape( angle )
 {
-//var shiftAngle = angle;
 var plusminus = '-';
 if (angle > 180)
   {
   angle = -(angle - 360); //for 180 - 360
   plusminus = '+';
   }
-var widthTape = document.getElementById("tape3").scrollWidth ; 
-$('#tape3').width( widthTape ); //set tape width so we can center it
+var widthTape = document.getElementById("tape").scrollWidth ; 
+$('#tape').width( widthTape ); //set tape width so we can center it
 var numberOfDegreesOnTape = tapeLines.length - 3; //why -3 ?
 var percentMove = angle * 100 / numberOfDegreesOnTape;
-$('#tape3').position( 
+$('#tape').position( 
   { 
   my: "center" + plusminus + percentMove + "% top",
   at: "center top",
-  of: "#tapeContainer3" ,
+  of: "#tapeContainer" ,
   collision: "none"
   }
                   );   
 }
-$('#tape3').html( tapeString ); //display tape
+$('#tape').html( tapeString ); //display tape
 moveTape( 0 ); //set tape
   
 </script> 
