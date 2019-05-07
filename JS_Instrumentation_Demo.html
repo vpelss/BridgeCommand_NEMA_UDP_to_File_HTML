@@ -10,7 +10,7 @@
      <script src="https://www.emogic.com/jqueryrotate/jQueryRotate.js">
     </script>  
     <script>
- var readRate = 1500;
+ var readRate = 2500;
 var httpAddress = 'http://127.0.0.1:8080'; 
     </script>
   <title>BridgeCommand JS Instrumentation</title>
@@ -111,6 +111,9 @@ var tapeString = tapeNumbers + '<br>' + tapeLines;
 <div id='tapeMeta' style='width:33%; display:inline-block;'>
   <div id='tapeContainer'>
     <div id ='tape'></div>
+<!--
+    <img id='tape' src='https://emogic.com/bc/comp.png'>
+-->
     <div id='tapeArrow'>^</div>
   </div>  
 </div>
@@ -151,7 +154,16 @@ function getHTML()
 function processHTML(data)
     {
     $( "#nEMAText" ).html('');
- 
+      /*
+  var myString = '';
+  var widthTapeContainer = $("#tapeContainer").width();
+   myString = myString + widthTapeContainer + " tapeContainer width()<br>";   
+  var scrollwidthTapeContainer =  document.getElementById("tapeContainer").scrollWidth ; 
+   myString = myString + scrollwidthTapeContainer + " tapeContainer  scrollwidth<br>";
+ var scrollwidthTape =  document.getElementById("tape").scrollWidth ; 
+ myString = myString + scrollwidthTape + " tape scrollwidth<br>";
+  $( "#nEMAText" ).append(myString);
+      */
     var DataArray = data.split("\n"); //turn lines into array 
     var LineArray;
           
@@ -170,10 +182,11 @@ function processHTML(data)
           RMC['UTC'] = LineArray[1];   
           RMC['Status'] = LineArray[2];
           RMC['Track'] = LineArray[8];
-          var ang = -1 * RMC['Track'];  
-          $("#compass").rotate({ angle:ang  });
-          $( "#compassDigital" ).html( String( Math.abs(ang.toFixed(2))) + '&#176;');
-          moveTape( RMC['Track'] );
+          var ang2 =  parseFloat(RMC['Track']).toFixed(2);
+          //var ang = -1 * ang2;   
+          $( "#compassDigital" ).html( String( ang2 ) + '&#176;');
+          $("#compass").rotate({ angle: -ang2  });
+          moveTape( ang2 );
           }
 
     //rudder
@@ -272,18 +285,30 @@ $('#tape').position(
 }
 
 function setTapeFontSize()
-  {
-  var widthTapeWindow = $("#tapeContainer").width();
-  var fontSizeTape = widthTapeWindow / 20; //tape view approx 20 degrees
+  {//only run once. avoids feedback loop
+  $("#tape").width( $("#tapeContainer").width() ); //required to fix scroll width issues. forces both tape and tapecontainer scroll width to be the same. caused bad readings when they were different
+  var widthTapeContainer = $("#tapeContainer").width();
+     
+/*
+  var myString = '';
+   myString = myString + widthTapeContainer + " tapeContainer width()<br>";   
+  var scrollwidthTapeContainer =  document.getElementById("tapeContainer").scrollWidth ; 
+   myString = myString + scrollwidthTapeContainer + " tapeContainer  scrollwidth<br>";
+ var scrollwidthTape =  document.getElementById("tape").scrollWidth ; 
+ myString = myString + scrollwidthTape + " tape scrollwidth<br>";
+  $( "#nEMAText" ).html(myString);
+  */
+    
+  var fontSizeTape = widthTapeContainer / 20; //tape view approx 20 degrees
   fontSizeTape = Math.abs(fontSizeTape);
   $("#tape").css( "fontSize", fontSizeTape +'pt' );
-  $("#tapeArrow").css( "fontSize", fontSizeTape );    
+  $("#tapeArrow").css( "fontSize", fontSizeTape );     
   }
   
-$('#tape').html( tapeString ); //display tape
-setTapeFontSize();
+setTapeFontSize();  
+$('#tape').html( tapeString ); //display text tape
 moveTape( 0 ); //set tape
-$( window ).resize( setTapeFontSize );
+$(window).resize( setTapeFontSize );
   
 </script> 
 
