@@ -162,6 +162,7 @@ object Form1: TForm1
     Active = True
     Bindings = <>
     DefaultPort = 8080
+    IOHandler = IdServerIOHandlerSSLOpenSSL1
     KeepAlive = True
     OnCommandGet = IdHTTPServer1CommandGet
     left = 144
@@ -174,5 +175,18 @@ object Form1: TForm1
     Port = 0
     left = 57
     top = 192
+  end
+  object IdServerIOHandlerSSLOpenSSL1: TIdServerIOHandlerSSLOpenSSL
+    SSLOptions.RootCertFile = 'rootCA.crt'
+    SSLOptions.CertFile = 'mydomain.com.crt'
+    SSLOptions.KeyFile = 'mydomain.com.key'
+    SSLOptions.Method = sslvSSLv23
+    SSLOptions.SSLVersions = [sslvSSLv2, sslvSSLv3, sslvTLSv1, sslvTLSv1_1, sslvTLSv1_2]
+    SSLOptions.Mode = sslmServer
+    SSLOptions.VerifyMode = [sslvrfClientOnce]
+    SSLOptions.VerifyDepth = 1
+    OnVerifyPeer = IdServerIOHandlerSSLOpenSSL1VerifyPeer
+    left = 360
+    top = 160
   end
 end
