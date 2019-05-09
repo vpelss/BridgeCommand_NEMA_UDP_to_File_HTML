@@ -182,7 +182,7 @@ function processHTML(data)
           var ang2 =  parseFloat(RMC['Track']).toFixed(2);
           //var ang = -1 * ang2;   
           $( "#compassDigital" ).html( String( ang2 ) + '&#176;');
-          $("#compass").rotate({ angle: -ang2  });
+          $("#compass").rotate({ angle: $("#compass").getRotateAngle() , animateTo:-ang2  });
           moveTape( ang2 );
           }
 
@@ -191,7 +191,7 @@ function processHTML(data)
           {
           RSA['Starboard'] = LineArray[1];  
           var ang = - 2 * RSA['Starboard'];  
-          $("#rudder").rotate({ angle: ang , center: ["50%", "14%"] }); 
+          $("#rudder").rotate({ angle: $("#rudder").getRotateAngle() , center: ["50%", "14%"] , animateTo:ang }); 
           } 
 
     //rpm port and starboard    
@@ -202,12 +202,12 @@ function processHTML(data)
           if ( RPM['Number'] == 1 ) 
             {
             var ang = .9 * RPM['RMP'];  
-            $("#portRPM").rotate({ angle: ang }); 
+            $("#portRPM").rotate({ angle: $("#portRPM").getRotateAngle() , animateTo:ang }); 
             }
           if ( RPM['Number'] == 2 ) 
             {
             var ang = .9 * RPM['RMP'];  
-            $("#starboardRPM").rotate({ angle: ang }); 
+            $("#starboardRPM").rotate({ angle: $("#starboardRPM").getRotateAngle() , animateTo:ang }); 
             }
           }           
         }       
