@@ -10,12 +10,18 @@
      <script src="https://www.emogic.com/jqueryrotate/jQueryRotate.js">
     </script>  
     <script>
- var readRate = 2500;
-var httpAddress = 'http://127.0.0.1:8080'; 
+      var fileSet = false;
+ var readRate = 1000;
+var httpAddress = 'http://localhost:8080'; 
     </script>
   <title>BridgeCommand JS Instrumentation</title>
 </head>
 <body>
+
+<!--
+Reading Win file share from linux: 
+sudo mount -t cifs //xxx.xxx.xxx.xxx/myShareName /mnt/ -o username=myUserName,password=myPassword
+-->
   
 <style>
 body {  }
@@ -62,18 +68,18 @@ var tapeString = tapeNumbers + '<br>' + tapeLines;
 <table>
     <tr>
       <td>
-      HTTP: <input type="radio" name='radioB' id="checkBoxHTTP" onchange="checkHTTP()" style='position: relative;z-index: 999;'>  
+      HTTP: <input type="radio" name='radioB' id="checkBoxHTTP" onchange="fileSet = false;checkHTTP();" style='position: relative;z-index: 999;'>  
         </td>
        <td>
        or  
         </td>
        <td>
        <div id="uploadFile_div" style='position: relative;z-index: 999;'>
-   <input id='fileinput' type="file" onchange='if (interval > 0) {clearInterval(interval)}; interval = setInterval( fileSelected , readRate );' />
+   <input id='fileinput' type="file" onchange='fileSet = true;checkHTTP();' />
    </div>
         </td>
       <td>
-        DEMO: <input type="radio" name='radioB' id="checkBoxDEMO" onchange="checkHTTP();" style='position: relative;z-index: 999;'> 
+        DEMO: <input type="radio" name='radioB' id="checkBoxDEMO" onchange="fileSet = false;checkHTTP();" style='position: relative;z-index: 999;'> 
       </td>
       </tr>  
   </table>
@@ -130,7 +136,8 @@ var tapeString = tapeNumbers + '<br>' + tapeLines;
  </tr>
     
 </table>
-  
+
+  <div id='nEMAText2'></div>
 <div id='nEMAText'></div>
 
 <script>
@@ -154,17 +161,7 @@ function getHTML()
 function processHTML(data)
     {
     $( "#nEMAText" ).html('');
-      /*
-  var myString = '';
-  var widthTapeContainer = $("#tapeContainer").width();
-   myString = myString + widthTapeContainer + " tapeContainer width()<br>";   
-  var scrollwidthTapeContainer =  document.getElementById("tapeContainer").scrollWidth ; 
-   myString = myString + scrollwidthTapeContainer + " tapeContainer  scrollwidth<br>";
- var scrollwidthTape =  document.getElementById("tape").scrollWidth ; 
- myString = myString + scrollwidthTape + " tape scrollwidth<br>";
-  $( "#nEMAText" ).append(myString);
-      */
-    var DataArray = data.split("\n"); //turn lines into array 
+     var DataArray = data.split("\n"); //turn lines into array 
     var LineArray;
           
     var RMC = {};
@@ -215,13 +212,15 @@ function processHTML(data)
           }           
         }       
     }
-  
+ 
+var fileName = '';
 function fileSelected() 
   {
-  document.getElementById("checkBoxHTTP").checked = false;
+  //document.getElementById("checkBoxHTTP").checked = false;
   var reader;
-  nEMAFile = document.getElementById('fileinput').files[0];
+  var nEMAFile = document.getElementById('fileinput').files[0];
   reader = new FileReader(); 
+  fileName = $('#fileinput').val();  
   reader.readAsText(nEMAFile); // Read file into memory   
   // Handle progress, success, and errors 
   //reader.onprogress = updateProgress;
@@ -249,15 +248,29 @@ function errorHandler(evt)
   
 function checkHTTP()
   {   
-  if (interval > 0) {clearInterval(interval)}; //stop both http and nema.txt
+  if (interval > 0) 
+    {
+    clearInterval(interval);
+    interval = 0;
+    }; //stop both http and nema.txt
   $( "#nEMAText" ).html( '' );
+  if ( fileSet == true ) //must be first
+    {
+    document.getElementById("checkBoxHTTP").checked = false;
+    document.getElementById("checkBoxDEMO").checked = false; 
+    interval = setInterval( fileSelected , readRate );
+    }
   if ( document.getElementById("checkBoxDEMO").checked == true )
     {
+    document.getElementById('uploadFile_div').innerHTML = document.getElementById('uploadFile_div').innerHTML; //reset / clear filereader 
+    fileSet = false;
     interval = setInterval( getDEMO , readRate ); //start http
     }    
   if ( document.getElementById("checkBoxHTTP").checked == true )
     {
     document.getElementById('uploadFile_div').innerHTML = document.getElementById('uploadFile_div').innerHTML; //reset / clear filereader 
+fileSet = false;
+    fileSet = false;
     interval = setInterval( getHTML , readRate ); //start http
     } 
   }  
@@ -288,16 +301,6 @@ function setTapeFontSize()
   {//only run once. avoids feedback loop
   $("#tape").width( $("#tapeContainer").width() ); //required to fix scroll width issues. forces both tape and tapecontainer scroll width to be the same. caused bad readings when they were different
   var widthTapeContainer = $("#tapeContainer").width();
-     
-/*
-  var myString = '';
-   myString = myString + widthTapeContainer + " tapeContainer width()<br>";   
-  var scrollwidthTapeContainer =  document.getElementById("tapeContainer").scrollWidth ; 
-   myString = myString + scrollwidthTapeContainer + " tapeContainer  scrollwidth<br>";
- var scrollwidthTape =  document.getElementById("tape").scrollWidth ; 
- myString = myString + scrollwidthTape + " tape scrollwidth<br>";
-  $( "#nEMAText" ).html(myString);
-  */
     
   var fontSizeTape = widthTapeContainer / 20; //tape view approx 20 degrees
   fontSizeTape = Math.abs(fontSizeTape);
