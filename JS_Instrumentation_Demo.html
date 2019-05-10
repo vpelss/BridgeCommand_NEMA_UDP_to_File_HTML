@@ -12,7 +12,7 @@
     <script>
       var fileSet = false;
  var readRate = 1000;
-var httpAddress = 'http://localhost:8080'; 
+var httpAddress = 'http://localhost:8080'; //use http://localhost:8080 OR https://localhost
     </script>
   <title>BridgeCommand JS Instrumentation</title>
 </head>
@@ -182,7 +182,8 @@ function processHTML(data)
           var ang2 =  parseFloat(RMC['Track']).toFixed(2);
           //var ang = -1 * ang2;   
           $( "#compassDigital" ).html( String( ang2 ) + '&#176;');
-          $("#compass").rotate({ angle: $("#compass").getRotateAngle() , animateTo:-ang2  });
+          //$("#compass").rotate({ angle: $("#compass").getRotateAngle() , animateTo:-ang2  }); //359 to 1 caused vertigo
+          $("#compass").rotate({ angle:-ang2 });
           moveTape( ang2 );
           }
 
