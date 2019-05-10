@@ -1,7 +1,7 @@
 object Form1: TForm1
-  Left = 269
+  Left = 285
   Height = 311
-  Top = 112
+  Top = 107
   Width = 432
   Caption = 'BC UDP to File and HTML'
   ClientHeight = 311
@@ -155,21 +155,20 @@ object Form1: TForm1
   object Timer1: TTimer
     Interval = 2
     OnTimer = Timer1Timer
-    left = 248
+    left = 272
     top = 192
   end
   object IdHTTPServer1: TIdHTTPServer
     Active = True
     Bindings = <>
-    DefaultPort = 8080
+    DefaultPort = 443
     IOHandler = IdServerIOHandlerSSLOpenSSL1
     KeepAlive = True
     OnCommandGet = IdHTTPServer1CommandGet
-    left = 144
+    left = 128
     top = 192
   end
   object IdUDPClient1: TIdUDPClient
-    OnStatus = IdUDPClient1Status
     Active = True
     BoundPort = 10110
     Port = 0
@@ -178,15 +177,22 @@ object Form1: TForm1
   end
   object IdServerIOHandlerSSLOpenSSL1: TIdServerIOHandlerSSLOpenSSL
     SSLOptions.RootCertFile = 'rootCA.crt'
-    SSLOptions.CertFile = 'mydomain.com.crt'
-    SSLOptions.KeyFile = 'mydomain.com.key'
+    SSLOptions.CertFile = 'localhost.crt'
+    SSLOptions.KeyFile = 'localhost.key'
     SSLOptions.Method = sslvSSLv23
     SSLOptions.SSLVersions = [sslvSSLv2, sslvSSLv3, sslvTLSv1, sslvTLSv1_1, sslvTLSv1_2]
     SSLOptions.Mode = sslmServer
-    SSLOptions.VerifyMode = [sslvrfClientOnce]
-    SSLOptions.VerifyDepth = 1
-    OnVerifyPeer = IdServerIOHandlerSSLOpenSSL1VerifyPeer
-    left = 360
-    top = 160
+    SSLOptions.VerifyMode = []
+    SSLOptions.VerifyDepth = 0
+    left = 128
+    top = 136
+  end
+  object IdHTTPServer2: TIdHTTPServer
+    Active = True
+    Bindings = <>
+    DefaultPort = 8080
+    OnCommandGet = IdHTTPServer1CommandGet
+    left = 208
+    top = 192
   end
 end

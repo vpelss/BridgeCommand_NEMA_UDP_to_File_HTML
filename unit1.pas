@@ -7,7 +7,7 @@ interface
 uses
    Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, ExtCtrls,
    ComCtrls, uPSComponent, IdHTTPServer, IdUDPClient, IdComponent, IdContext,
-   IdCustomHTTPServer, IdSSLOpenSSL, IdHTTP;
+   IdCustomHTTPServer, IdSSLOpenSSL, IdHTTP, IdCustomTCPServer, IdGlobal;
 
 type
 
@@ -21,6 +21,7 @@ type
     Edit3: TEdit;
     Edit4: TEdit;
     IdHTTPServer1: TIdHTTPServer;
+    IdHTTPServer2: TIdHTTPServer;
     IdServerIOHandlerSSLOpenSSL1: TIdServerIOHandlerSSLOpenSSL;
     IdUDPClient1: TIdUDPClient;
     Label1: TLabel;
@@ -40,11 +41,6 @@ type
     procedure FormCreate(Sender: TObject);
     procedure IdHTTPServer1CommandGet(AContext: TIdContext;
       ARequestInfo: TIdHTTPRequestInfo; AResponseInfo: TIdHTTPResponseInfo);
-    function IdServerIOHandlerSSLOpenSSL1VerifyPeer(Certificate: TIdX509;
-      AOk: Boolean; ADepth, AError: Integer): Boolean;
-
-    procedure IdUDPClient1Status(ASender: TObject; const AStatus: TIdStatus;
-      const AStatusText: string);
     procedure StopClick(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
     procedure Timer2Timer(Sender: TObject);
@@ -115,23 +111,6 @@ CustomHeaders.AddValue('Access-Control-Allow-Origin','*');
 
   AResponseInfo.ContentText := fullOutput;
 end;
-
-
-function TForm1.IdServerIOHandlerSSLOpenSSL1VerifyPeer(Certificate: TIdX509;
-  AOk: Boolean; ADepth, AError: Integer): Boolean;
-begin
-  Result := AOk;
-end;
-
-
-
-procedure TForm1.IdUDPClient1Status(ASender: TObject; const AStatus: TIdStatus;
-  const AStatusText: string);
-begin
-  //temp :=   AStatusText;
-
-end;
-
 
 
 procedure TForm1.StopClick(Sender: TObject);
