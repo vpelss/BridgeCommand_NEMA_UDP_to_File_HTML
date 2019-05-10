@@ -3,7 +3,7 @@
   <ProjectSession>
     <PathDelim Value="\"/>
     <Version Value="11"/>
-    <BuildModes Active="Default"/>
+    <BuildModes Active="small"/>
     <Units Count="20">
       <Unit0>
         <Filename Value="BridgeCommandNEMAUDPtoFileandHTML.lpr"/>
@@ -167,7 +167,7 @@
     <OtherDefines Count="1">
       <Define0 Value="UseCThreads"/>
     </OtherDefines>
-    <JumpHistory Count="30" HistoryIndex="29">
+    <JumpHistory Count="29" HistoryIndex="28">
       <Position1>
         <Filename Value="unit1.pas"/>
         <Caret Line="66" Column="39" TopLine="52"/>
@@ -278,16 +278,12 @@
       </Position27>
       <Position28>
         <Filename Value="unit1.pas"/>
-        <Caret Line="121" TopLine="126"/>
+        <Caret Line="44" Column="3" TopLine="31"/>
       </Position28>
       <Position29>
         <Filename Value="unit1.pas"/>
-        <Caret Line="44" Column="3" TopLine="31"/>
-      </Position29>
-      <Position30>
-        <Filename Value="unit1.pas"/>
         <Caret Line="128" Column="17" TopLine="112"/>
-      </Position30>
+      </Position29>
     </JumpHistory>
     <RunParams>
       <FormatVersion Value="2"/>
