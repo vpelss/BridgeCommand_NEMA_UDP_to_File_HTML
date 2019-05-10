@@ -18,7 +18,7 @@ No third party programs are needed and it is cross platform compatable.
 It is hoped that this NEMA.txt output might be built into future bridgecommand-bc versions. 
 If not, BridgeCommand_NEMA_UDP_to_File_HTML can be used.
 
-Instramuntation can also be built using webgl or some clever application of images, video or jquey rotate modules. http://jqueryrotate.com/
+Instramuntation can be built using webgl or some clever application of images, video or jquey rotate modules. http://jqueryrotate.com/
 
 -------------------------------------
 bridgecommand-bc UDP NEMA Sample Output:
