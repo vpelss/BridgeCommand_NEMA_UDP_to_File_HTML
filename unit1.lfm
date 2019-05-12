@@ -10,8 +10,8 @@ object Form1: TForm1
   LCLVersion = '2.0.0.4'
   object Memo1: TMemo
     Left = 8
-    Height = 168
-    Top = 136
+    Height = 176
+    Top = 128
     Width = 416
     Lines.Strings = (
       'Memo1'
@@ -35,7 +35,7 @@ object Form1: TForm1
     Width = 17
     Associate = Edit1
     Min = 0
-    Position = 2
+    Position = 10
     TabOrder = 2
   end
   object Edit1: TEdit
@@ -136,27 +136,28 @@ object Form1: TForm1
     TabOrder = 9
     Thousands = False
   end
-  object Label5: TLabel
-    Left = 320
-    Height = 13
-    Top = 96
-    Width = 89
-    Caption = 'HTTP port is :8080'
-    ParentColor = False
-  end
   object CheckBox1: TCheckBox
-    Left = 320
+    Left = 352
     Height = 17
-    Top = 120
+    Top = 96
     Width = 61
     Caption = 'demo op'
     TabOrder = 10
   end
+  object CheckBox2: TCheckBox
+    Left = 225
+    Height = 17
+    Top = 96
+    Width = 117
+    Caption = 'Port 8080 (for linux)'
+    OnChange = CheckBox2Change
+    TabOrder = 11
+  end
   object Timer1: TTimer
     Interval = 2
     OnTimer = Timer1Timer
-    left = 272
-    top = 192
+    left = 184
+    top = 216
   end
   object IdHTTPServer1: TIdHTTPServer
     Active = True
@@ -165,15 +166,15 @@ object Form1: TForm1
     IOHandler = IdServerIOHandlerSSLOpenSSL1
     KeepAlive = True
     OnCommandGet = IdHTTPServer1CommandGet
-    left = 128
-    top = 192
+    left = 136
+    top = 216
   end
   object IdUDPClient1: TIdUDPClient
     Active = True
     BoundPort = 10110
     Port = 0
-    left = 57
-    top = 192
+    left = 56
+    top = 216
   end
   object IdServerIOHandlerSSLOpenSSL1: TIdServerIOHandlerSSLOpenSSL
     SSLOptions.RootCertFile = 'rootCA.crt'
@@ -184,15 +185,23 @@ object Form1: TForm1
     SSLOptions.Mode = sslmServer
     SSLOptions.VerifyMode = []
     SSLOptions.VerifyDepth = 0
-    left = 128
-    top = 136
+    left = 136
+    top = 176
   end
   object IdHTTPServer2: TIdHTTPServer
     Active = True
     Bindings = <>
-    DefaultPort = 8080
     OnCommandGet = IdHTTPServer1CommandGet
-    left = 208
-    top = 192
+    left = 96
+    top = 216
+  end
+  object IdSSLIOHandlerSocketOpenSSL1: TIdSSLIOHandlerSocketOpenSSL
+    MaxLineAction = maException
+    Port = 0
+    DefaultPort = 0
+    SSLOptions.Mode = sslmUnassigned
+    SSLOptions.VerifyMode = []
+    SSLOptions.VerifyDepth = 0
+    left = 288
   end
 end

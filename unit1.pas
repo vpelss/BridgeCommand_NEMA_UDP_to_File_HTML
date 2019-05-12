@@ -16,6 +16,7 @@ type
   TForm1 = class(TForm)
     Button1: TButton;
     CheckBox1: TCheckBox;
+    CheckBox2: TCheckBox;
     Edit1: TEdit;
     Edit2: TEdit;
     Edit3: TEdit;
@@ -23,12 +24,12 @@ type
     IdHTTPServer1: TIdHTTPServer;
     IdHTTPServer2: TIdHTTPServer;
     IdServerIOHandlerSSLOpenSSL1: TIdServerIOHandlerSSLOpenSSL;
+    IdSSLIOHandlerSocketOpenSSL1: TIdSSLIOHandlerSocketOpenSSL;
     IdUDPClient1: TIdUDPClient;
     Label1: TLabel;
     Label2: TLabel;
     Label3: TLabel;
     Label4: TLabel;
-    Label5: TLabel;
     Stop: TButton;
     Memo1: TMemo;
     Timer1: TTimer;
@@ -36,11 +37,14 @@ type
     UpDown2: TUpDown;
     UpDown3: TUpDown;
     procedure Button1Click(Sender: TObject);
+    procedure CheckBox2Change(Sender: TObject);
     procedure Edit1Change(Sender: TObject);
     procedure Edit4Change(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure IdHTTPServer1CommandGet(AContext: TIdContext;
       ARequestInfo: TIdHTTPRequestInfo; AResponseInfo: TIdHTTPResponseInfo);
+    procedure Label5Click(Sender: TObject);
+    procedure RadioButton1Change(Sender: TObject);
     procedure StopClick(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
     procedure Timer2Timer(Sender: TObject);
@@ -84,7 +88,26 @@ end;
 procedure TForm1.Button1Click(Sender: TObject);
 begin
 IdUDPClient1.active := True;
-    Timer1.Enabled := True;
+Timer1.Enabled := True;
+end;
+
+procedure TForm1.CheckBox2Change(Sender: TObject);
+begin
+IdHTTPServer2.Active := False;
+
+    if ( CheckBox2.Checked = True) then
+     begin
+     IdHTTPServer2.Bindings.clear;
+     IdHTTPServer2.DefaultPort:= 8080;
+     end
+  else
+      begin
+      IdHTTPServer2.Bindings.clear;
+      IdHTTPServer2.DefaultPort:= 80;
+      end;
+
+  IdHTTPServer2.Active := True;
+
 end;
 
 procedure TForm1.FormCreate(Sender: TObject);
@@ -96,10 +119,9 @@ end;
 procedure TForm1.IdHTTPServer1CommandGet(AContext: TIdContext;
   ARequestInfo: TIdHTTPRequestInfo; AResponseInfo: TIdHTTPResponseInfo);
 begin
-    //CORS access
+//CORS access
   //https://jonlennartaasenden.wordpress.com/2012/08/08/cors-for-indy/
-  with aResponseInfo do
-CustomHeaders.AddValue('Access-Control-Allow-Origin','*');
+  with aResponseInfo do CustomHeaders.AddValue('Access-Control-Allow-Origin','*');
 
    AResponseInfo.ContentText := '<html><head><title>My First Response</title></head>' +
   '<body>Command: ' + ARequestInfo.Command +
@@ -110,6 +132,16 @@ CustomHeaders.AddValue('Access-Control-Allow-Origin','*');
   '</pre></body></html>';
 
   AResponseInfo.ContentText := fullOutput;
+end;
+
+procedure TForm1.Label5Click(Sender: TObject);
+begin
+
+end;
+
+procedure TForm1.RadioButton1Change(Sender: TObject);
+begin
+
 end;
 
 
