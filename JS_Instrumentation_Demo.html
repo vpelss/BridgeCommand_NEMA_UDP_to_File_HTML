@@ -1,4 +1,28 @@
 <!DOCTYPE html>  
+<!--
+issues:
+andoid access to windows shares:
+
+fixed issues:
+AJAX: File read. modern browsers do not allow code to read local files without permission.
+Fix: FileReader()
+
+SOP: http server must be CORS friendly or ajax call to another IP will fail. 
+fix: https://jonlennartaasenden.wordpress.com/2012/08/08/cors-for-indy/
+
+Mixed Content: if httpAddress is not http://localhost:8080 and index.html is hosted on a https site we get: Mixed Content: The page at '<URL>' was loaded over HTTPS, but requested an insecure XMLHttpRequest endpoint '<URL>'. This request has been blocked; the content must be served over HTTPS.
+Fix:
+-save index.html locally and run
+-serve index.html from an http address: not common as google lowers search ratings
+-NEMA server is https. But then we need a valid certificate authority! 
+
+ajax: invlid cert authority for ssl
+fix: add a link to allow temp certificate for browser session
+
+linux access to windows shares:
+fix: sudo mount -o username:name //server/sharepath /mnt/sharepath
+
+-->
 <html> 
 <head>
 <meta name="description" content="NEMA">
@@ -11,8 +35,8 @@
     </script>  
     <script>
       var fileSet = false;
- var readRate = 1000;
-var httpAddress = 'http://localhost:8080'; //use http://localhost:8080 OR https://localhost
+ var readRate = 1500;
+var httpAddress = 'https://192.168.1.104'; //use http://localhost:8080 OR https://localhost
     </script>
   <title>BridgeCommand JS Instrumentation</title>
 </head>
@@ -68,7 +92,7 @@ var tapeString = tapeNumbers + '<br>' + tapeLines;
 <table>
     <tr>
       <td>
-      HTTP: <input type="radio" name='radioB' id="checkBoxHTTP" onchange="fileSet = false;checkHTTP();" style='position: relative;z-index: 999;'>  
+      HTTP: <input type="radio" name='radioB' id="checkBoxHTTP" onchange="fileSet = false;checkHTTP();" style='position: relative;z-index: 999;'> <input type='textbox' id='httpValue' value='https://localhost' onchange='httpChange();'>
         </td>
        <td>
        or  
@@ -83,6 +107,8 @@ var tapeString = tapeNumbers + '<br>' + tapeLines;
       </td>
       </tr>  
   </table>
+  
+    <a id='testLink' target='_blank'>click to test httpAddress</a>
 
   <table width='100%'>     
   <tr>
@@ -139,7 +165,7 @@ var tapeString = tapeNumbers + '<br>' + tapeLines;
 
   <div id='nEMAText2'></div>
 <div id='nEMAText'></div>
-
+  
 <script>
 var interval;
 var DEMOCount = 0;
@@ -157,6 +183,10 @@ function getHTML()
     $.get( httpAddress , processHTML )
       .fail(function() { $( "#nEMAText" ).html( 'ajax error' ); }); 
     } 
+//setup ajax error feedback  
+$( document ).ajaxError(function(  event, jqxhr, settings, thrownError ) {
+  $( "#nEMAText" ).append( "<li>Error requesting page " + settings.url + '</li><li> ' + thrownError + "</li>" );
+});
   
 function processHTML(data)
     {
@@ -313,6 +343,13 @@ setTapeFontSize();
 $('#tape').html( tapeString ); //display text tape
 moveTape( 0 ); //set tape
 $(window).resize( setTapeFontSize );
+ 
+function httpChange()
+  {
+  httpAddress = $('#httpValue').val();
+  $('#testLink').prop('href' , $('#httpValue').val() );
+  }
+httpChange();
   
 </script> 
 
