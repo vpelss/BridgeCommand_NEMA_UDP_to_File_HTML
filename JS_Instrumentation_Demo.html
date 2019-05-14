@@ -81,7 +81,7 @@ table td
   
 <div style='position: relative;z-index: 999;'>  
   <div class='inline-block topClass' width='33%'>HTTP: <input type="radio" name='radioB' id="checkBoxHTTP" onchange="fileSet = false;checkHTTP();" style='position: relative;z-index: 999;'> <input type='textbox' id='httpValue' value='https://localhost' onchange='httpChange();'><br><a id='testLink' target='_blank'>click to test httpAddress</a></div>
-  <div class='inline-block topClass' width='33%'><input id='fileinput' type="file" style='position: relative;z-index: 999;' onchange='fileSet = true;checkHTTP();' /></div>
+  <div id='uploadFile_div' class='inline-block topClass' width='33%'><input id='fileinput' type="file" style='position: relative;z-index: 999;' onchange='fileSet = true;checkHTTP();' /></div>
   <div class='inline-block topClass' width='33%'>DEMO: <input type="radio" name='radioB' id="checkBoxDEMO" onchange="fileSet = false;checkHTTP();"></div>
 </div>
 
