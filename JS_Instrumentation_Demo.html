@@ -20,7 +20,8 @@ ajax: invlid cert authority for ssl
 fix: add a link to allow temp certificate for browser session
 
 linux access to windows shares:
-fix: sudo mount -o username:name //server/sharepath /mnt/sharepath
+fix:
+sudo mount -t cifs //xxx.xxx.xxx.xxx/myShareName /mnt/ -o username=myUserName,password=myPassword
 
 -->
 <html> 
@@ -31,22 +32,16 @@ fix: sudo mount -o username:name //server/sharepath /mnt/sharepath
     <script src="https://code.jquery.com/jquery-3.1.0.js">
     </script>
  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-     <script src="https://www.emogic.com/jqueryrotate/jQueryRotate.js">
+ <script src="https://www.emogic.com/jqueryrotate/jQueryRotate.js">
     </script>  
-    <script>
-      var fileSet = false;
- var readRate = 1500;
-var httpAddress = 'https://192.168.1.104'; //use http://localhost:8080 OR https://localhost
+ <script>
+var fileSet = false;
+ var readRate = 500;
+var httpAddress = 'https://localhost'; 
     </script>
   <title>BridgeCommand JS Instrumentation</title>
 </head>
 <body>
-
-<!--
-Reading Win file share from linux: 
-sudo mount -t cifs //xxx.xxx.xxx.xxx/myShareName /mnt/ -o username=myUserName,password=myPassword
--->
-  
 <style>
 body {  }
 .container 
@@ -59,6 +54,8 @@ body {  }
   top: 0px;
   left: 0px;
   }    
+.inline-block {display:inline-block;}
+.topClass {vertical-align: top;}
 #tapeContainer
   {  
   border-radius: 5px;
@@ -81,34 +78,12 @@ body {  }
 table td
   {border-style: none;}  
  </style>
-
-<script>
- 
-var tapeNumbers = '160&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;170&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;180&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;190&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;200&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;210&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;220&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;230&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;240&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;250&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;260&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;270&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;280&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;290&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;300&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;310&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;320&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;330&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;340&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;350&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;10&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;20&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;30&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;40&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;50&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;60&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;70&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;80&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;90&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;100&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;110&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;120&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;130&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;140&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;150&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;160&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;170&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;180&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;190&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;200';
-  var tapeLines = '&nbsp;|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|'; 
-var tapeString = tapeNumbers + '<br>' + tapeLines;  
-</script>
   
-<table>
-    <tr>
-      <td>
-      HTTP: <input type="radio" name='radioB' id="checkBoxHTTP" onchange="fileSet = false;checkHTTP();" style='position: relative;z-index: 999;'> <input type='textbox' id='httpValue' value='https://localhost' onchange='httpChange();'>
-        </td>
-       <td>
-       or  
-        </td>
-       <td>
-       <div id="uploadFile_div" style='position: relative;z-index: 999;'>
-   <input id='fileinput' type="file" onchange='fileSet = true;checkHTTP();' />
-   </div>
-        </td>
-      <td>
-        DEMO: <input type="radio" name='radioB' id="checkBoxDEMO" onchange="fileSet = false;checkHTTP();" style='position: relative;z-index: 999;'> 
-      </td>
-      </tr>  
-  </table>
-  
-    <a id='testLink' target='_blank'>click to test httpAddress</a>
+<div style='position: relative;z-index: 999;'>  
+  <div class='inline-block topClass' width='33%'>HTTP: <input type="radio" name='radioB' id="checkBoxHTTP" onchange="fileSet = false;checkHTTP();" style='position: relative;z-index: 999;'> <input type='textbox' id='httpValue' value='https://localhost' onchange='httpChange();'><br><a id='testLink' target='_blank'>click to test httpAddress</a></div>
+  <div class='inline-block topClass' width='33%'><input id='fileinput' type="file" style='position: relative;z-index: 999;' onchange='fileSet = true;checkHTTP();' /></div>
+  <div class='inline-block topClass' width='33%'>DEMO: <input type="radio" name='radioB' id="checkBoxDEMO" onchange="fileSet = false;checkHTTP();"></div>
+</div>
 
   <table width='100%'>     
   <tr>
@@ -139,17 +114,16 @@ var tapeString = tapeNumbers + '<br>' + tapeLines;
  </tr>
   </table>  
   
+<div>
 <div style='width:33%; display:inline-block;'>&nbsp;</div>
 <div id='tapeMeta' style='width:33%; display:inline-block;'>
   <div id='tapeContainer'>
     <div id ='tape'></div>
-<!--
-    <img id='tape' src='https://emogic.com/bc/comp.png'>
--->
     <div id='tapeArrow'>^</div>
   </div>  
 </div>
 <div style='width:33%; display:inline-block;'>&nbsp;</div>
+</div>
   
 <table width='100%'> 
   <tr>
@@ -163,12 +137,21 @@ var tapeString = tapeNumbers + '<br>' + tapeLines;
     
 </table>
 
-  <div id='nEMAText2'></div>
-<div id='nEMAText'></div>
+<div id='nEMAText'  width='50%'></div>
   
-<script>
+<script>  
+var tapeNumbers = '160&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;170&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;180&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;190&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;200&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;210&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;220&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;230&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;240&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;250&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;260&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;270&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;280&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;290&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;300&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;310&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;320&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;330&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;340&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;350&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;10&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;20&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;30&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;40&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;50&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;60&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;70&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;80&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;90&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;100&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;110&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;120&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;130&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;140&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;150&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;160&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;170&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;180&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;190&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;200';
+var tapeLines = '&nbsp;|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|'; 
+var tapeString = tapeNumbers + '<br>' + tapeLines; 
 var interval;
 var DEMOCount = 0;
+  
+function httpChange() //update http test link
+  {
+  httpAddress = $('#httpValue').val();
+  $('#testLink').prop('href' , $('#httpValue').val() );
+  }
+httpChange();
   
 function getDEMO() 
     { 
@@ -344,12 +327,7 @@ $('#tape').html( tapeString ); //display text tape
 moveTape( 0 ); //set tape
 $(window).resize( setTapeFontSize );
  
-function httpChange()
-  {
-  httpAddress = $('#httpValue').val();
-  $('#testLink').prop('href' , $('#httpValue').val() );
-  }
-httpChange();
+
   
 </script> 
 
