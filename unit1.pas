@@ -24,7 +24,6 @@ type
     IdHTTPServer1: TIdHTTPServer;
     IdHTTPServer2: TIdHTTPServer;
     IdServerIOHandlerSSLOpenSSL1: TIdServerIOHandlerSSLOpenSSL;
-    IdSSLIOHandlerSocketOpenSSL1: TIdSSLIOHandlerSocketOpenSSL;
     IdUDPClient1: TIdUDPClient;
     Label1: TLabel;
     Label2: TLabel;

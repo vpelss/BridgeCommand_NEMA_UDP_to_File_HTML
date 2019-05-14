@@ -30,7 +30,7 @@ object Form1: TForm1
   end
   object UpDown1: TUpDown
     Left = 56
-    Height = 29
+    Height = 21
     Top = 8
     Width = 17
     Associate = Edit1
@@ -40,7 +40,7 @@ object Form1: TForm1
   end
   object Edit1: TEdit
     Left = 8
-    Height = 29
+    Height = 21
     Top = 8
     Width = 48
     OnChange = Edit1Change
@@ -49,15 +49,15 @@ object Form1: TForm1
   end
   object Label1: TLabel
     Left = 80
-    Height = 17
+    Height = 13
     Top = 8
-    Width = 138
+    Width = 120
     Caption = 'datagram post Rate (ms)'
     ParentColor = False
   end
   object Edit2: TEdit
     Left = 8
-    Height = 29
+    Height = 21
     Top = 36
     Width = 48
     TabOrder = 4
@@ -65,7 +65,7 @@ object Form1: TForm1
   end
   object UpDown2: TUpDown
     Left = 56
-    Height = 29
+    Height = 21
     Top = 36
     Width = 17
     Associate = Edit2
@@ -75,9 +75,9 @@ object Form1: TForm1
   end
   object Label2: TLabel
     Left = 80
-    Height = 17
+    Height = 13
     Top = 36
-    Width = 158
+    Width = 140
     Caption = '# of html /text lines buffered'
     ParentColor = False
   end
@@ -92,7 +92,7 @@ object Form1: TForm1
   end
   object Edit3: TEdit
     Left = 8
-    Height = 29
+    Height = 21
     Top = 64
     Width = 176
     TabOrder = 7
@@ -100,7 +100,7 @@ object Form1: TForm1
   end
   object Edit4: TEdit
     Left = 8
-    Height = 29
+    Height = 21
     Top = 96
     Width = 80
     NumbersOnly = True
@@ -110,23 +110,23 @@ object Form1: TForm1
   end
   object Label3: TLabel
     Left = 192
-    Height = 17
+    Height = 13
     Top = 64
-    Width = 68
+    Width = 57
     Caption = 'OP filename'
     ParentColor = False
   end
   object Label4: TLabel
     Left = 113
-    Height = 17
+    Height = 13
     Top = 96
-    Width = 88
+    Width = 77
     Caption = ' bound udp port'
     ParentColor = False
   end
   object UpDown3: TUpDown
     Left = 88
-    Height = 29
+    Height = 21
     Top = 96
     Width = 17
     Associate = Edit4
@@ -138,17 +138,17 @@ object Form1: TForm1
   end
   object CheckBox1: TCheckBox
     Left = 352
-    Height = 23
+    Height = 17
     Top = 96
-    Width = 75
+    Width = 61
     Caption = 'demo op'
     TabOrder = 10
   end
   object CheckBox2: TCheckBox
     Left = 225
-    Height = 23
+    Height = 17
     Top = 96
-    Width = 136
+    Width = 117
     Caption = 'Port 8080 (for linux)'
     OnChange = CheckBox2Change
     TabOrder = 11
@@ -194,14 +194,5 @@ object Form1: TForm1
     OnCommandGet = IdHTTPServer1CommandGet
     left = 96
     top = 216
-  end
-  object IdSSLIOHandlerSocketOpenSSL1: TIdSSLIOHandlerSocketOpenSSL
-    MaxLineAction = maException
-    Port = 0
-    DefaultPort = 0
-    SSLOptions.Mode = sslmUnassigned
-    SSLOptions.VerifyMode = []
-    SSLOptions.VerifyDepth = 0
-    left = 288
   end
 end
