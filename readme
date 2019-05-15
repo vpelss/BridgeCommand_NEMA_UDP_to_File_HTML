@@ -5,7 +5,7 @@ Note: For Linux, set ports > 1024 if not running as root
 
 JS_Instrumentation_Demo.html is tested in Chrome and Firefox, occasionally in IE.
 
-This program will take the bridgecommand-bc UDP NEMA output and saves it as NEMA.txt and also outputs it using a simple HTML server.
+This program will take the bridgecommand-bc UDP NEMA output and saves it as NEMA.txt and also outputs it using a simple HTTP server (ports 80 and 443)
 
 The output format is 6 lines of NEMA text. 
 bridgecommand-bc sends one line/datagrams of UDP NEMA text at 250 ms intervals.
@@ -19,6 +19,9 @@ It is hoped that this NEMA.txt output might be built into future bridgecommand-b
 If not, BridgeCommand_NEMA_UDP_to_File_HTML can be used.
 
 Instramuntation can be built using webgl or some clever application of images, video or jquey rotate modules. http://jqueryrotate.com/
+
+How to use: Zip and download this complete git. Unzip it. Run bridgecommander-bc.exe (https://www.bridgecommand.co.uk/). Run BridgeCommandNEMAUDPtoFileandHTML.exe then open JS_Instrumentation_Demo.html and choose hhtp, or the file option.
+JS_Instrumentation_Demo.html can be modified to suit your needs.
 
 -------------------------------------
 bridgecommand-bc UDP NEMA Sample Output:
