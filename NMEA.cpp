@@ -44,26 +44,29 @@ http://55.55.55.55/release/current and be served /var/root/www/release-5.0.0 */
 
 //return responseAllocServeFileFromRequestPath(NULL, request->path, request->pathDecoded, "./NEMA.txt");
 
-char sid[5000];
+//char sid[5000];
 
+std::string text;
 std::string line;
 std::ifstream myfile("NEMA.txt");
 if (myfile.is_open())
 	{
-	while (getline(myfile, line)) {} ;
+	while (getline(myfile, line )) { text = text + line + "\n"; };
 	myfile.close();
 	}
 else {  };
-line = line + "jj";
-//const char* sid = line.c_str();
-strcpy(sid , line.c_str());
-//strcpy(sid, "sjsjsjsj");
-//std::ofstream myfile2;
-//myfile2.open("_NEMA.txt");
-//myfile2 << sid;
-//myfile2.close();
-
-return responseAllocHTMLWithFormat( sid );
+const char* sid = text.c_str();
+//strcpy(sid , text.c_str());
+//return responseAllocHTMLWithStatus(300, "jOK", html);
+//return responseAllocHTMLWithFormat( text.c_str() );
+struct HeapString connectionDebugInfo = connectionDebugStringCreate(connection);
+struct Response* response = responseAllocWithFormat(200, "OK\nAccess-Control-Allow-Origin: *", "text/html; charset=UTF-8",
+	sid ,
+	EMBEDDABLE_WEB_SERVER_VERSION_STRING,
+	EMBEDDABLE_WEB_SERVER_VERSION_STRING,
+	connectionDebugInfo.contents);
+heapStringFreeContents(&connectionDebugInfo);
+return response;
 }
 //vinman end
 
@@ -222,11 +225,11 @@ void NMEA::updateNMEA()
 	}
     else if (currentMessageType == 5)
     {
-        //snprintf(messageBuffer,100,"$IIRPM,S,2,%d,100,A",stbdRPM);
+		snprintf(messageBuffer, 100, "$IIRPM,S,2,%d,100,A", stbdRPM);
 		//vinman start
 		strcat(messageBuffer2, "\n");
 		strcat(messageBuffer2, messageBuffer);
-		//strcat(messageBuffer2, "/0");
+		//strcat(messageBuffer2, "\0");
 
 		std::ofstream myfile;
 		myfile.open("NEMA.txt");
