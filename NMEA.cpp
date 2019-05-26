@@ -33,19 +33,8 @@ static THREAD_RETURN_TYPE STDCALL_ON_WIN32 acceptConnectionsThread(void* unusedP
 	return (THREAD_RETURN_TYPE)0;
 }
 
-struct Response* createResponseForRequest(const struct Request* request, struct Connection* connection) {
-	/* Serve a file from documentRoot. If you just want to serve the current directory over HTTP just do "."
-To serve out the current directory like a normal web server do:
-responseAllocServeFileFromRequestPath("/", request->path, request->pathDecoded, ".")
-To serve files with a prefix do this:
-responseAllocServeFileFromRequestPath("/release/current", request->path, request->pathDecoded, "/var/root/www/release-5.0.0") so people will go to:
-http://55.55.55.55/release/current and be served /var/root/www/release-5.0.0 */
-//struct Response* responseAllocServeFileFromRequestPath(const char* pathPrefix, const char* requestPath, const char* requestPathDecoded, const char* documentRoot);
-
-//return responseAllocServeFileFromRequestPath(NULL, request->path, request->pathDecoded, "./NEMA.txt");
-
-//char sid[5000];
-
+struct Response* createResponseForRequest(const struct Request* request, struct Connection* connection) 
+{
 std::string text;
 std::string line;
 std::ifstream myfile("NEMA.txt");
@@ -55,13 +44,12 @@ if (myfile.is_open())
 	myfile.close();
 	}
 else {  };
-const char* sid = text.c_str();
-//strcpy(sid , text.c_str());
+const char* textPointer = text.c_str();
 //return responseAllocHTMLWithStatus(300, "jOK", html);
 //return responseAllocHTMLWithFormat( text.c_str() );
 struct HeapString connectionDebugInfo = connectionDebugStringCreate(connection);
 struct Response* response = responseAllocWithFormat(200, "OK\nAccess-Control-Allow-Origin: *", "text/html; charset=UTF-8",
-	sid ,
+	textPointer ,
 	EMBEDDABLE_WEB_SERVER_VERSION_STRING,
 	EMBEDDABLE_WEB_SERVER_VERSION_STRING,
 	connectionDebugInfo.contents);
@@ -229,7 +217,6 @@ void NMEA::updateNMEA()
 		//vinman start
 		strcat(messageBuffer2, "\n");
 		strcat(messageBuffer2, messageBuffer);
-		//strcat(messageBuffer2, "\0");
 
 		std::ofstream myfile;
 		myfile.open("NEMA.txt");
