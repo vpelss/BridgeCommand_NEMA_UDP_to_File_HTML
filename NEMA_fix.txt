@@ -1,0 +1,40 @@
+add
+EmbeddableWebServer.h
+to bridgecomman-bc project
+
+in preprocessor of 
+bridgecomman-bc project
+_WIN32_WINNT 0x0A00;
+WIN32;
+_CRT_SECURE_NO_WARNINGS;
+
+in EmbeddableWebServer.h
+//#define close(x) closesocket(x)
+and all close references changed to closesocket
+
+In NEMA.cpp:
+
+#include "EmbeddableWebServer.h"
+
+static struct Server server;
+static THREAD_RETURN_TYPE STDCALL_ON_WIN32 acceptConnectionsThread(void* unusedParam) {
+	serverInit(&server);
+	const uint16_t portInHostOrder = 8080;
+	acceptConnectionsUntilStoppedFromEverywhereIPv4(&server, portInHostOrder);
+	return (THREAD_RETURN_TYPE)0;
+}
+
+struct Response* createResponseForRequest(const struct Request* request, struct Connection* connection) {
+	time_t t;
+	time(&t);
+	return responseAllocHTMLWithFormat("<html><h1>The time is seconds is %ld</h1></html>", t);
+}
+
+NEMA::NEMA{
+
+...
+	pthread_t threadHandle;
+	pthread_create(&threadHandle, NULL, &acceptConnectionsThread, NULL);
+
+}
+
