@@ -9,8 +9,8 @@ WIN32;
 _CRT_SECURE_NO_WARNINGS;
 
 in EmbeddableWebServer.h
-//#define close(x) closesocket(x)
-and all close references changed to closesocket
+put following define near bottom before #if UNDEFINE_CRT_SECURE_NO_WARNINGS
+#define close(x) close(x) //vinman need to avoid .close() conflicts in NEMA.CPP
 
 In NEMA.cpp:
 
