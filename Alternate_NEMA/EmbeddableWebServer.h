@@ -416,7 +416,7 @@ static int snprintfResponseHeader(char* destination, size_t destinationCapacity,
     /* windows function aliases */
     #define strdup(string) _strdup(string)
     #define unlink(file) _unlink(file)
-    #define close(x) closesocket(x)
+//    #define close(x) closesocket(x) //vinman
     #define gai_strerror_ansi(x) gai_strerrorA(x)
 #else // WIN32
     #define gai_strerror_ansi(x) gai_strerror(x)
@@ -1471,7 +1471,7 @@ void serverStop(struct Server* server) {
     }
     server->shouldRun = false;
     if (server->listenerfd >= 0) {
-        close(server->listenerfd);
+        closesocket(server->listenerfd);
     }
     serverMutexUnlock(server);
     pthread_mutex_lock(&server->stoppedMutex);
@@ -1600,7 +1600,7 @@ static int acceptConnectionsUntilStoppedInternal(struct Server* server, const st
     }
     serverMutexLock(server);
     if (0 != server->listenerfd && errno != EBADF) {
-        close(server->listenerfd);
+        closesocket(server->listenerfd); //vinman
     }
     serverMutexUnlock(server);
     connectionFree(nextConnection);
@@ -1835,7 +1835,7 @@ static THREAD_RETURN_TYPE STDCALL_ON_WIN32 connectionHandlerThread(void* connect
         }
     }
     /* Alright - we're done */
-    close(connection->socketfd);
+    closesocket(connection->socketfd); //vinman
     pthread_mutex_lock(&counters.lock);
     counters.bytesSent += (ssize_t) connection->status.bytesSent;
     counters.bytesReceived += (ssize_t) connection->status.bytesReceived;
@@ -2246,7 +2246,7 @@ static void callWSAStartupIfNecessary() {
             abort();
         }
     } else {
-        close(testsocket);
+        closesocket(testsocket); //vinman
     }
 }
 
