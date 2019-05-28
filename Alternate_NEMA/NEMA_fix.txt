@@ -9,8 +9,9 @@ WIN32;
 _CRT_SECURE_NO_WARNINGS;
 
 in EmbeddableWebServer.h
-put following define near bottom before #if UNDEFINE_CRT_SECURE_NO_WARNINGS
+1.put following define near bottom before #if UNDEFINE_CRT_SECURE_NO_WARNINGS
 #define close(x) close(x) //vinman need to avoid .close() conflicts in NEMA.CPP
+2. comment out snprintf function and defenition
 
 In NEMA.cpp:
 
