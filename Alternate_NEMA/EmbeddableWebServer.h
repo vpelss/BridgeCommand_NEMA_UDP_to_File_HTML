@@ -410,13 +410,13 @@ static int snprintfResponseHeader(char* destination, size_t destinationCapacity,
     static int pthread_mutex_lock(pthread_mutex_t* mutex);
     static int pthread_mutex_unlock(pthread_mutex_t* mutex);
     static int pthread_mutex_destroy(pthread_mutex_t* mutex);
-    static int snprintf(char* destination, size_t length, const char* format, ...);
+    //vinman static int snprintf(char* destination, size_t length, const char* format, ...);
     static int strcasecmp(const char* utf8String1, const char* utf8String2);
     static wchar_t* strdupWideFromUTF8(const char* utf8String, size_t extraBytes);
     /* windows function aliases */
     #define strdup(string) _strdup(string)
     #define unlink(file) _unlink(file)
-    #define close(x) closesocket(x) //vinman
+    #define close(x) closesocket(x)
     #define gai_strerror_ansi(x) gai_strerrorA(x)
 #else // WIN32
     #define gai_strerror_ansi(x) gai_strerror(x)
@@ -2084,6 +2084,7 @@ static int pthread_detach(pthread_t threadHandle) {
 }
 
 /* I can't just #define this to snprintf_s because that will blow up and call an "invalid parameter handler" if you don't have enough length. */
+/*vinman
 static int snprintf(char* destination, size_t length, const char* format, ...) {
     va_list ap;
     va_start(ap, format);
@@ -2091,6 +2092,7 @@ static int snprintf(char* destination, size_t length, const char* format, ...) {
     va_end(ap);
     return result;
 }
+*/
 
 static DIR* opendir(const char* path) { 
     /* Append \\* to the path and use the Find*Files Windows API */
@@ -2259,6 +2261,8 @@ static FILE* fopen_utf8_path(const char* utf8Path, const char* mode) {
     return fp;
 }
 
+#define close(x) close(x) //vinman need this to avoid .close() conflicts in NEMA.CPP
+
 #if UNDEFINE_CRT_SECURE_NO_WARNINGS
 #undef _CRT_SECURE_NO_WARNINGS
 #endif
@@ -2321,3 +2325,4 @@ static FILE* fopen_utf8_path(const char* utf8Path, const char* mode) {
 #endif // WIN32 or Linux/Mac OS X
 
 #endif // EWS_HEADER_ONLY
+
