@@ -22,9 +22,11 @@
 #include <string>
 	 
 //vinman start
+#define use_web_server
 #include <fstream> 
-#include "EmbeddableWebServer.h"
 
+#ifdef use_web_server
+#include "EmbeddableWebServer.h"
 static struct Server server;
 static THREAD_RETURN_TYPE STDCALL_ON_WIN32 acceptConnectionsThread(void* unusedParam) {
 	serverInit(&server);
@@ -45,8 +47,6 @@ if (myfile.is_open())
 	}
 else {  };
 const char* textPointer = text.c_str();
-//return responseAllocHTMLWithStatus(300, "jOK", html);
-//return responseAllocHTMLWithFormat( text.c_str() );
 struct HeapString connectionDebugInfo = connectionDebugStringCreate(connection);
 struct Response* response = responseAllocWithFormat(200, "OK\nAccess-Control-Allow-Origin: *", "text/html; charset=UTF-8",
 	textPointer ,
@@ -56,6 +56,12 @@ struct Response* response = responseAllocWithFormat(200, "OK\nAccess-Control-All
 heapStringFreeContents(&connectionDebugInfo);
 return response;
 }
+
+static THREAD_RETURN_TYPE STDCALL_ON_WIN32 stopAcceptingConnections(void* u) {
+	serverStop(&server);
+	return (THREAD_RETURN_TYPE)NULL;
+}
+#endif
 //vinman end
 
 NMEA::NMEA(SimulationModel* model, std::string serialPortName, std::string udpHostname, std::string udpPortName, irr::IrrlichtDevice* dev) //Constructor
@@ -102,8 +108,10 @@ NMEA::NMEA(SimulationModel* model, std::string serialPortName, std::string udpHo
     }
 
 //vinman start
+	#ifdef use_web_server
 	pthread_t threadHandle;
 	pthread_create(&threadHandle, NULL, &acceptConnectionsThread, NULL);
+	#endif
 //vinman end
 }
 
@@ -124,6 +132,11 @@ NMEA::~NMEA()
         }
     }
 
+	//vinman start
+	#ifdef use_web_server
+	serverStop(&server);
+	#endif
+	//vinman stop
 }
 
 void NMEA::updateNMEA()
@@ -173,57 +186,34 @@ void NMEA::updateNMEA()
     //Todo: Replace with select/case block:
     if (currentMessageType        == 0)
     {
-        snprintf(messageBuffer,100,"$GPRMC,%s,A,%02u%06.3f,%c,%03u%06.3f,%c,%.2f,%2f,%s,,,A",timeString.c_str(),latDegrees,latMinutes,northSouth,lonDegrees,lonMinutes,eastWest,sog,cog,dateString.c_str()); //FIXME: SOG -> knots, COG->degrees
 		//vinman start
-		strcat(messageBuffer2, "\n");
-		strcat(messageBuffer2, messageBuffer);
+		std::ofstream myfile;
+		myfile.open("NEMA.txt");
+		myfile << messageBufferNEMAtxt;
+		myfile.close();
+		messageBufferNEMAtxt = "";
 		//vinman end
+		snprintf(messageBuffer,100,"$GPRMC,%s,A,%02u%06.3f,%c,%03u%06.3f,%c,%.2f,%2f,%s,,,A",timeString.c_str(),latDegrees,latMinutes,northSouth,lonDegrees,lonMinutes,eastWest,sog,cog,dateString.c_str()); //FIXME: SOG -> knots, COG->degrees
 	}
     else if (currentMessageType == 1)
     {
         snprintf(messageBuffer,100,"$GPGLL,%02u%06.3f,%c,%03u%06.3f,%c,%s,A,A",latDegrees,latMinutes,northSouth,lonDegrees,lonMinutes,eastWest,timeString.c_str());
-		//vinman start
-		strcat(messageBuffer2, "\n");
-		strcat(messageBuffer2, messageBuffer);
-		//vinman end
 	}
     else if (currentMessageType == 2)
     {
         snprintf(messageBuffer,100,"$GPGGA,%s,%02u%06.3f,%c,%03u%06.3f,%c,8,8,0.9,0.0,M,0.0,M,,",timeString.c_str(),latDegrees,latMinutes,northSouth,lonDegrees,lonMinutes,eastWest); //Hardcoded NMEA Quality 8, Satellites 8, HDOP 0.9
-		//vinman start
-		strcat(messageBuffer2, "\n");
-		strcat(messageBuffer2, messageBuffer);
-		//vinman end
 	}
     else if (currentMessageType == 3)
     {
         snprintf(messageBuffer,100,"$IIRSA,%d,A,,",rudderAngle);
-		//vinman start
-		strcat(messageBuffer2, "\n");
-		strcat(messageBuffer2, messageBuffer);
-		//vinman end
 	}
     else if (currentMessageType == 4)
     {
         snprintf(messageBuffer,100,"$IIRPM,S,1,%d,100,A",portRPM); //'S' is for shaft, '100' is pitch
-		//vinman start
-		strcat(messageBuffer2, "\n");
-		strcat(messageBuffer2, messageBuffer);
-		//vinman end
 	}
     else if (currentMessageType == 5)
     {
 		snprintf(messageBuffer, 100, "$IIRPM,S,2,%d,100,A", stbdRPM);
-		//vinman start
-		strcat(messageBuffer2, "\n");
-		strcat(messageBuffer2, messageBuffer);
-
-		std::ofstream myfile;
-		myfile.open("NEMA.txt");
-		myfile << messageBuffer2;
-		myfile.close();
-		strcpy(messageBuffer2, "");
-		//vinman end
 	}
 
     currentMessageType++;
@@ -233,6 +223,8 @@ void NMEA::updateNMEA()
     }
 
     std::string messageString(messageBuffer);
+
+	messageBufferNEMAtxt = messageBufferNEMAtxt + messageString + "\n"; //vinman
 
     messageToSend = addChecksum(messageString);
 }

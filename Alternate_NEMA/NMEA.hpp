@@ -47,7 +47,7 @@ private:
     asio::ip::udp::endpoint receiver_endpoint;
     //asio::ip::udp::socket* socket;
 	
-	char messageBuffer2[5000]; //vinman at least 5 x messagebuffer[256]
+	std::string messageBufferNEMAtxt; //vinman
 };
 
 #endif // __NMEA_HPP_INCLUDED__
