@@ -14,6 +14,7 @@ The NEMA output data is: $GPRMC , $GPGLL ,$GPGGA , $IIRSA ,$IIRPM , $IIRPM
 The output is intended to be used for web pages like JS_Instrumentation_Demo.html which will 
 take the NEMA data and display it on easily modifiable instrumentation using HTML, IMG and JavaScript.
 No third party programs are needed and it is cross platform compatable.
+Demo at: http://www.emogic.com/bc
 
 It is hoped that this NEMA.txt output might be built into future bridgecommand-bc versions. 
 If not, BridgeCommand_NEMA_UDP_to_File_HTML can be used.
