@@ -5,10 +5,10 @@ Note: For Linux, set ports > 1024 if not running as root
 
 JS_Instrumentation_Demo.html is tested in Chrome and Firefox, occasionally in IE.
 
-This program will take the bridgecommand-bc UDP NEMA output and saves it as NEMA.txt and also outputs it using a simple HTTP server (ports 80 and 443)
+This program will take the bridgecommand-bc UDP NEMA output and saves it as NEMA.txt and also outputs it using a simple HTTP server (ports 80, 8080 (for linux) and 443)
 
-The output format is 6 lines of NEMA text. 
-bridgecommand-bc sends one line/datagrams of UDP NEMA text at 250 ms intervals.
+The output format is 1 lines of NEMA text. Buffering multiple lines is available, but not recommended. 
+bridgecommand-bc sends one line of UDP NEMA text at 250 ms intervals.
 The NEMA output data is: $GPRMC , $GPGLL ,$GPGGA , $IIRSA ,$IIRPM , $IIRPM
 
 The output is intended to be used for web pages like JS_Instrumentation_Demo.html which will 
