@@ -1,28 +1,33 @@
+Demo at: https://www.emogic.com/bc/
+
+How to use: 
+Zip and download this complete git. Unzip it. 
+Run BridgeCommandNEMAUDPtoFileandHTML.exe 
+Open JS_Instrumentation_Demo.html in a browser and choose file (point to NEMA.txt), or http option 
+Run bridgecommander-bc.exe (https://www.bridgecommand.co.uk/). 
+
+------------------------------------------------------
+
 BridgeCommandNEMAUDPtoFileandHTML will compile with and works in Windows and Linux and Raspbian.
 Compile with Lazarus / Free Pascal. https://www.lazarus-ide.org/ https://www.freepascal.org/
 Install Indy https://www.indyproject.org/
 Note: For Linux, set ports > 1024 if not running as root
 
-JS_Instrumentation_Demo.html is tested in Chrome and Firefox, occasionally in IE.
+JS_Instrumentation_Demo.html is tested in Chrome and Firefox, and occasionally in IE.
 
-This program will take the bridgecommand-bc UDP NEMA output and saves it as NEMA.txt and also outputs it using a simple HTTP server (ports 80, 8080 (for linux) and 443)
+BridgeCommandNEMAUDPtoFileandHTML.exe will take the bridgecommand-bc UDP NEMA output and saves it as NEMA.txt and also outputs it using a simple HTTP server (ports 80, 8080 (for linux) and 443)
 
-The output format is 1 lines of NEMA text. Buffering multiple lines is available, but not recommended. 
 bridgecommand-bc sends one line of UDP NEMA text at 250 ms intervals.
-The NEMA output data is: $GPRMC , $GPGLL ,$GPGGA , $IIRSA ,$IIRPM , $IIRPM
+bridgecommand-bc provides the following NEMA output: $GPRMC , $GPGLL ,$GPGGA , $IIRSA ,$IIRPM , $IIRPM
 
-The output is intended to be used for web pages like JS_Instrumentation_Demo.html which will 
-take the NEMA data and display it on easily modifiable instrumentation using HTML, IMG and JavaScript.
+The BridgeCommandNEMAUDPtoFileandHTML.exe output is intended to be used for web pages like JS_Instrumentation_Demo.html which will 
+take the NEMA data and display it on instrumentation based on HTML, IMG and JavaScript technologies.
+Instramuntation can be built using webgl or some clever application of images, video or jquey rotate modules. http://jqueryrotate.com/
 No third party programs are needed and it is cross platform compatable.
-Demo at: http://www.emogic.com/bc
 
 It is hoped that this NEMA.txt output might be built into future bridgecommand-bc versions. 
-If not, BridgeCommand_NEMA_UDP_to_File_HTML can be used.
-
-Instramuntation can be built using webgl or some clever application of images, video or jquey rotate modules. http://jqueryrotate.com/
-
-How to use: Zip and download this complete git. Unzip it. Run bridgecommander-bc.exe (https://www.bridgecommand.co.uk/). Run BridgeCommandNEMAUDPtoFileandHTML.exe then open JS_Instrumentation_Demo.html and choose hhtp, or the file option.
-JS_Instrumentation_Demo.html can be modified to suit your needs.
+I have modified the bridgecommand-bc NEMA.cpp code if you want to compile it into your version of bridgecommand. See : https://github.com/vpelss/BridgeCommand_NEMA_UDP_to_File_HTML/tree/master/Alternate_NEMA
+BridgeCommand_NEMA_UDP_to_File_HTML.exe can always be used.
 
 -------------------------------------
 bridgecommand-bc UDP NEMA Sample Output:
