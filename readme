@@ -151,17 +151,3 @@ Status, A means data is valid
 Port rudder sensor
 Status, A means data is valid
 Checksum
-
---------------------------
-
-RPM - Revolutions
-        1 2 3   4   5 6
-        | | |   |   | |
- $--RPM,a,x,x.x,x.x,A*hh<CR><LF>
-Field Number:
-Sourse, S = Shaft, E = Engine
-Engine or shaft number
-Speed, Revolutions per minute
-Propeller pitch, % of maximum, "-" means astern
-Status, A means data is valid
-Checksum
