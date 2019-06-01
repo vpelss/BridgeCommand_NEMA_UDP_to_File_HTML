@@ -156,6 +156,10 @@ var
 begin
    //http://ww2.indyproject.org/docsite/html/frames.html?frmname=topic&frmfile=index.html
 
+if (lineCount = 0) then //allows last line to stay long enough to see
+   begin
+   Memo1.Lines.Clear;
+   end;
 myText := IdUDPClient1.ReceiveString(1);
   myText := Trim(myText);
 
@@ -164,7 +168,7 @@ myText := IdUDPClient1.ReceiveString(1);
       Memo1.Lines.Add(myText);
       lineCount := lineCount + 1;
       end;
-If ( lineCount > UpDown2.Position ) then
+If ( lineCount >= UpDown2.Position ) then
      begin
       filename := Edit3.Text;
      if ( CheckBox1.Checked ) then
@@ -175,7 +179,7 @@ If ( lineCount > UpDown2.Position ) then
      filename := filename + '.txt';
      Memo1.Lines.SaveToFile( filename );
      fullOutput := Memo1.lines.Text;
-     Memo1.Lines.Clear;
+     //Memo1.Lines.Clear;
      lineCount := 0;
      end;
      ;
