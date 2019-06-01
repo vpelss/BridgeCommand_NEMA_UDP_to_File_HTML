@@ -186,13 +186,6 @@ void NMEA::updateNMEA()
     //Todo: Replace with select/case block:
     if (currentMessageType        == 0)
     {
-		//vinman start
-		std::ofstream myfile;
-		myfile.open("NEMA.txt");
-		myfile << messageBufferNEMAtxt;
-		myfile.close();
-		messageBufferNEMAtxt = "";
-		//vinman end
 		snprintf(messageBuffer,100,"$GPRMC,%s,A,%02u%06.3f,%c,%03u%06.3f,%c,%.2f,%2f,%s,,,A",timeString.c_str(),latDegrees,latMinutes,northSouth,lonDegrees,lonMinutes,eastWest,sog,cog,dateString.c_str()); //FIXME: SOG -> knots, COG->degrees
 	}
     else if (currentMessageType == 1)
@@ -224,7 +217,12 @@ void NMEA::updateNMEA()
 
     std::string messageString(messageBuffer);
 
-	messageBufferNEMAtxt = messageBufferNEMAtxt + messageString + "\n"; //vinman
+	//vinman start
+	std::ofstream myfile;
+	myfile.open("NEMA.txt");
+	myfile << messageString;
+	myfile.close();
+	//vinman end
 
     messageToSend = addChecksum(messageString);
 }
