@@ -36,8 +36,8 @@ sudo mount -t cifs //xxx.xxx.xxx.xxx/myShareName /mnt/ -o username=myUserName,pa
     </script>  
  <script>
 var fileSet = false;
- var readRate = 500;
-var httpAddress = 'https://localhost'; 
+ var readRate = 200;
+//var httpAddress = 'http://localhost'; 
     </script>
   <title>BridgeCommand JS Instrumentation</title>
 </head>
@@ -80,7 +80,7 @@ table td
  </style>
   
 <div style='position: relative;z-index: 999;'>  
-  <div class='inline-block topClass' width='33%'>HTTP: <input type="radio" name='radioB' id="checkBoxHTTP" onchange="fileSet = false;checkHTTP();" style='position: relative;z-index: 999;'> <input type='textbox' id='httpValue' value='https://localhost' onchange='httpChange();'><br><a id='testLink' target='_blank'>click to test httpAddress</a></div>
+  <div class='inline-block topClass' width='33%'>HTTP: <input type="radio" name='radioB' id="checkBoxHTTP" onchange="fileSet = false;checkHTTP();" style='position: relative;z-index: 999;'> <input type='textbox' id='httpValue' value='http://localhost' onchange='httpChange();'><br><a id='testLink' target='_blank'>click to test httpAddress</a></div>
   <div id='uploadFile_div' class='inline-block topClass' width='33%'><input id='fileinput' type="file" style='position: relative;z-index: 999;' onchange='fileSet = true;checkHTTP();' /></div>
   <div class='inline-block topClass' width='33%'>DEMO: <input type="radio" name='radioB' id="checkBoxDEMO" onchange="fileSet = false;checkHTTP();"></div>
 </div>
@@ -140,6 +140,39 @@ table td
 <div id='nEMAText' style='overflow:hidden;width:90%;'></div>
   
 <script>  
+var NEMADatabase = { 
+  '$IIRPM' : ['Source','Engine','RPM','Pitch','Status'],
+  '$GPRMC' : ['UTC','Status','Latitude','LatitudeNorthOrSouth','Longitude','LongitideEastOrWest','Knots','DegreesTrue','Date','MagneticVariation','MagneticVariationEastOrWest','FAAmodeIndicator'],
+  '$GPGLL' : ['Latitude','LatitudeNorthOrSouth','Longitude','LongitideEastOrWest','UTC','Status','FAAmodeIndicator'] ,
+  '$GPGGA' : ['UTC','Latitude','LatitudeNorthOrSouth','Longitude','LongitideEastOrWest','GPSqualityIndicator','NumberOfSatellites','HorizontalDilutionOfPrecision','AntennaAltitude','UnitsOfAntennaAltitude','GeoidalSeparation','UnitsOfGeoidalSeparation','AgeOfDifferentialGPSdata','DifferentialReferenceStationID'] ,
+  '$IIRSA' : ['StarboardRudderSensor','StatusStarboardRudder','PortRudderSensor','StatusPortRudder']
+};
+  
+var NEMAJSON = {}; //built from NEMA text and NEMADatabase using function BuildNEMAJSON(data) : it will be NEMAJSON[NEMAid][ column name (as per NEMADatabase) ] = value
+
+function BuildNEMAJSON(data) //takes data (nema text) and converts it to NEMAJSON based on NEMADatabase
+  {
+  var LinesArray = data.split("\n"); //turn lines into array 
+  var NEMAarray; 
+  NEMAJSON = {}; //clear old data    
+  for (var i = 0, len = LinesArray.length; i < len; i++) 
+    {//for each NEMA txt line
+    var LineText , checksum;
+    [LineText , checksum] = LinesArray[i].split("*"); //split checksum off
+    NEMAarray = LineText.split(","); //turn LineText (a string) into an array
+    var NEMAid = NEMAarray.shift(); //get NEMAid
+    //build JSON
+    if ( NEMADatabase.hasOwnProperty(NEMAid) ) 
+      {//matched in NEMADatabase
+      NEMAJSON[NEMAid] = {};
+      for (var i2 = 0, len2 = NEMAarray.length ; i2 < len2; i2++)
+        {
+        NEMAJSON[NEMAid][ NEMADatabase[NEMAid][i2] ] = NEMAarray[i2];
+        }
+      }
+    }
+  };
+
 var tapeNumbers = '160&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;170&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;180&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;190&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;200&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;210&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;220&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;230&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;240&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;250&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;260&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;270&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;280&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;290&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;300&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;310&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;320&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;330&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;340&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;350&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;10&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;20&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;30&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;40&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;50&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;60&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;70&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;80&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;90&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;100&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;110&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;120&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;130&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;140&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;150&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;160&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;170&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;180&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;190&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;200';
 var tapeLines = '&nbsp;|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|'; 
 var tapeString = tapeNumbers + '<br>' + tapeLines; 
@@ -155,7 +188,8 @@ httpChange();
   
 function getDEMO() 
     { 
-    var httpDEMOPath = 'https://emogic.com/cgi/bc/NEMA' + DEMOCount + '.txt';
+    //var httpDEMOPath = 'https://emogic.com/cgi/bc/NEMA' + DEMOCount + '.txt';
+    var httpDEMOPath = 'https://www.emogic.com/bc/NEMA/NEMA' + DEMOCount + '.txt';
     DEMOCount += 1;
     $.get( httpDEMOPath , processHTML )
       .fail(function() { DEMOCount = 0; $( "#nEMAText" ).html( 'ajax error' ); }); 
@@ -172,60 +206,35 @@ $( document ).ajaxError(function(  event, jqxhr, settings, thrownError ) {
 });
   
 function processHTML(data)
-    {
-    $( "#nEMAText" ).html('');
-     var DataArray = data.split("\n"); //turn lines into array 
-    var LineArray;
-          
-    var RMC = {};
-    var RSA = {}; 
-    var RPM = {}; 
+    {   
+    $( "#nEMAText" ).html( '<pre>' + data + '</pre>' );
+    BuildNEMAJSON(data);
       
-    //convert wanted lines to objects
-    for (var i = 0, len = DataArray.length; i < len; i++) 
-        {
-        $( "#nEMAText" ).append( DataArray[i]  + '</br>');
-        LineArray = DataArray[i].split(","); //turn DataArray[i] (a string) into an array       
     //compass
-    if ( LineArray[0] == '$GPRMC' )
-          {
-          RMC['UTC'] = LineArray[1];   
-          RMC['Status'] = LineArray[2];
-          RMC['Track'] = LineArray[8];
-          var ang2 =  parseFloat(RMC['Track']).toFixed(2);
-          //var ang = -1 * ang2;   
-          $( "#compassDigital" ).html( String( ang2 ) + '&#176;');
-          //$("#compass").rotate({ angle: $("#compass").getRotateAngle() , animateTo:-ang2  }); //359 to 1 caused vertigo
-          $("#compass").rotate({ angle:-ang2 });
-          moveTape( ang2 );
-          }
-
+    if ( NEMAJSON.hasOwnProperty('$GPRMC') )
+      {
+      var ang =  parseFloat(NEMAJSON['$GPRMC']['DegreesTrue']).toFixed(2);
+      $( "#compassDigital" ).html( String( ang ) + '&#176;');
+      $("#compass").rotate({ angle:-ang });
+      moveTape( ang );
+      }
     //rudder
-    if ( LineArray[0] == '$IIRSA' )  
+    if ( NEMAJSON.hasOwnProperty('$IIRSA') )
           {
-          RSA['Starboard'] = LineArray[1];  
-          var ang = - 2 * RSA['Starboard'];  
+          var ang = - 2 * NEMAJSON['$IIRSA']['StarboardRudderSensor']; 
           $("#rudder").rotate({ angle: $("#rudder").getRotateAngle() , center: ["50%", "14%"] , animateTo:ang }); 
           } 
-
-    //rpm port and starboard    
-    if ( LineArray[0] == '$IIRPM' ) 
+    //rpm port and starboard  
+    if ( NEMAJSON.hasOwnProperty('$IIRPM') )
           {
-          RPM['Number'] = LineArray[2]; 
-          RPM['RMP'] = Math.abs( LineArray[3] ); //no neg RPM
-          if ( RPM['Number'] == 1 ) 
-            {
-            var ang = .9 * RPM['RMP'];  
-            $("#portRPM").rotate({ angle: $("#portRPM").getRotateAngle() , animateTo:ang }); 
-            }
-          if ( RPM['Number'] == 2 ) 
-            {
-            var ang = .9 * RPM['RMP'];  
-            $("#starboardRPM").rotate({ angle: $("#starboardRPM").getRotateAngle() , animateTo:ang }); 
-            }
+          var PortOrStarboardJSON = { 1 : '#portRPM' , 2 : '#starboardRPM'};
+          var EngineNumber = NEMAJSON['$IIRPM']['Engine'];
+          var RPM =Math.abs( NEMAJSON['$IIRPM']['RPM'] ); //no neg RPM
+          var ang = .9 * RPM;
+          var PortOrStarboard = PortOrStarboardJSON[EngineNumber];
+          $( PortOrStarboard ).rotate({ angle: $( PortOrStarboard ).getRotateAngle() , animateTo:ang }); 
           }           
-        }       
-    }
+    };
  
 var fileName = '';
 function fileSelected() 
@@ -326,9 +335,7 @@ setTapeFontSize();
 $('#tape').html( tapeString ); //display text tape
 moveTape( 0 ); //set tape
 $(window).resize( setTapeFontSize );
- 
-
-  
+   
 </script> 
 
 </body>
