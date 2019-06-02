@@ -25,7 +25,7 @@ take the NEMA data and display it on instrumentation based on HTML, IMG and Java
 Instramuntation can be built using webgl or some clever application of images, video or jquey rotate modules. http://jqueryrotate.com/
 No third party programs are needed and it is cross platform compatable.
 
-It is hoped that this NEMA.txt output might be built into future bridgecommand-bc versions. 
+It is hoped that this NEMA.txt and HTML output might be built into future bridgecommand-bc versions. 
 I have modified the bridgecommand-bc NEMA.cpp code if you want to compile it into your version of bridgecommand. See : https://github.com/vpelss/BridgeCommand_NEMA_UDP_to_File_HTML/tree/master/Alternate_NEMA
 BridgeCommand_NEMA_UDP_to_File_HTML.exe can always be used.
 
