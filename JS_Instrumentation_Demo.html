@@ -146,7 +146,7 @@ var NEMADatabase = {
   '$GPGLL' : ['Latitude','LatitudeNorthOrSouth','Longitude','LongitideEastOrWest','UTC','Status','FAAmodeIndicator'] ,
   '$GPGGA' : ['UTC','Latitude','LatitudeNorthOrSouth','Longitude','LongitideEastOrWest','GPSqualityIndicator','NumberOfSatellites','HorizontalDilutionOfPrecision','AntennaAltitude','UnitsOfAntennaAltitude','GeoidalSeparation','UnitsOfGeoidalSeparation','AgeOfDifferentialGPSdata','DifferentialReferenceStationID'] ,
   '$IIRSA' : ['StarboardRudderSensor','StatusStarboardRudder','PortRudderSensor','StatusPortRudder']
-};
+  };
   
 var NEMAJSON = {}; //built from NEMA text and NEMADatabase using function BuildNEMAJSON(data) : it will be NEMAJSON[NEMAid][ column name (as per NEMADatabase) ] = value
 
