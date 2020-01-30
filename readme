@@ -1,6 +1,13 @@
+BridgeCommand is an excellent, free, naval simulator. The options for instrementation are, programs like OpenCPN, or the built in bridgecommand-rp.exe.  
+But what if you want more? 
+That is what this git is for.
+It is comprised of two parts.
+1. An example of what instrementation you can build with HTML and JS.
+2. Two options for taking the output of BridgeCommand and modifying that output to be used with your HTML / JS instrementation. 
+
 Demo at: https://www.emogic.com/bc/
 
-How to use: 
+Quick how to use: 
 Zip and download this complete git. Unzip it. 
 Run BridgeCommandNEMAUDPtoFileandHTML.exe 
 Open JS_Instrumentation_Demo.html in a browser and choose file (point to NEMA.txt), or http option 
@@ -8,10 +15,13 @@ Run bridgecommander-bc.exe (https://www.bridgecommand.co.uk/).
 
 ------------------------------------------------------
 
-BridgeCommandNEMAUDPtoFileandHTML will compile with and works in Windows and Linux and Raspbian.
+
+------------------------------------------------------
+
+BridgeCommandNEMAUDPtoFileandHTML will compile with, and works in, Windows and Linux and Raspbian.
 Compile with Lazarus / Free Pascal. https://www.lazarus-ide.org/ https://www.freepascal.org/
 Install Indy https://www.indyproject.org/
-Note: For Linux, set ports > 1024 if not running as root
+Note: For Linux, set ports > 1024 if you are not running as root
 
 JS_Instrumentation_Demo.html is tested in Chrome and Firefox, and occasionally in IE.
 
