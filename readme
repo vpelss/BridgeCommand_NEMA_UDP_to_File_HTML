@@ -14,7 +14,15 @@ Open JS_Instrumentation_Demo.html in a browser and choose file (point to NEMA.tx
 Run bridgecommander-bc.exe (https://www.bridgecommand.co.uk/). 
 
 ------------------------------------------------------
+All the parts:
 
+JS_Instrumentation_Demo.html is the HTML / JS example and demo. With a little more creativity, you could do a lot more.
+Demo and images are at: https://www.emogic.com/bc/
+
+The precompiled BridgeCommandNEMAUDPtoFileandHTML.exe, for windows, converts the Bridgecommand UDP output to either html output or a local text file to be used by JS_Instrumentation_Demo.html
+The source code for Lazarus is in the same folder.
+
+The Alternate_NEMA folder is a mod for part of the BridgeCommand source code that will do what BridgeCommandNEMAUDPtoFileandHTML.exe does.
 
 ------------------------------------------------------
 
