@@ -17,7 +17,7 @@ Fix:
 -NEMA server is https. But then we need a valid certificate authority! 
 
 ajax: invlid cert authority for ssl
-fix: add a link to allow temp certificate for browser session
+fix: add a test link to allow temp certificate for browser session
 
 linux access to windows shares:
 fix:
@@ -125,6 +125,16 @@ table td
 <div style='width:33%; display:inline-block;'>&nbsp;</div>
 </div>
   
+  <table width='100%'>    
+  <tr>
+   <td width='45%' align='right'>&nbsp;SOG </td>
+   <td width='10%' align='center'>
+  <div id='SOGKnots'>0.0</div> 
+    </td>
+   <td width='45%' align='left'>&nbsp;Kts</td>
+ </tr>
+</table> 
+  
 <table width='100%'> 
   <tr>
    <td width='33%'>&nbsp;</td>
@@ -142,7 +152,7 @@ table td
 <script>  
 var NEMADatabase = { 
   '$IIRPM' : ['Source','Engine','RPM','Pitch','Status'],
-  '$GPRMC' : ['UTC','Status','Latitude','LatitudeNorthOrSouth','Longitude','LongitideEastOrWest','Knots','DegreesTrue','Date','MagneticVariation','MagneticVariationEastOrWest','FAAmodeIndicator'],
+  '$GPRMC' : ['UTC','Status','Latitude','LatitudeNorthOrSouth','Longitude','LongitideEastOrWest','SOGKnots','DegreesTrue','Date','MagneticVariation','MagneticVariationEastOrWest','FAAmodeIndicator'],
   '$GPGLL' : ['Latitude','LatitudeNorthOrSouth','Longitude','LongitideEastOrWest','UTC','Status','FAAmodeIndicator'] ,
   '$GPGGA' : ['UTC','Latitude','LatitudeNorthOrSouth','Longitude','LongitideEastOrWest','GPSqualityIndicator','NumberOfSatellites','HorizontalDilutionOfPrecision','AntennaAltitude','UnitsOfAntennaAltitude','GeoidalSeparation','UnitsOfGeoidalSeparation','AgeOfDifferentialGPSdata','DifferentialReferenceStationID'] ,
   '$IIRSA' : ['StarboardRudderSensor','StatusStarboardRudder','PortRudderSensor','StatusPortRudder']
@@ -213,6 +223,8 @@ function processHTML(data)
     //compass
     if ( NEMAJSON.hasOwnProperty('$GPRMC') )
       {
+      var sogKnots =  parseFloat(NEMAJSON['$GPRMC']['SOGKnots']).toFixed(1);
+      $( "#SOGKnots" ).html( String( sogKnots ));
       var ang =  parseFloat(NEMAJSON['$GPRMC']['DegreesTrue']).toFixed(2);
       $( "#compassDigital" ).html( String( ang ) + '&#176;');
       $("#compass").rotate({ angle:-ang });
