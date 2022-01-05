@@ -199,7 +199,7 @@ httpChange();
 function getDEMO() 
     { 
     //var httpDEMOPath = 'https://emogic.com/cgi/bc/NEMA' + DEMOCount + '.txt';
-    var httpDEMOPath = 'https://www.emogic.com/bc/NEMA/NEMA' + DEMOCount + '.txt';
+    var httpDEMOPath = 'NEMA/NEMA' + DEMOCount + '.txt';
     DEMOCount += 1;
     $.get( httpDEMOPath , processHTML )
       .fail(function() { DEMOCount = 0; $( "#nEMAText" ).html( 'ajax error' ); }); 
